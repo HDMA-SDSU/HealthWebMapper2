@@ -1,9 +1,9 @@
 # HealthWebMapper(version 1.5)
 
-HealthWebMapper(version 1.5) is an under development new version of HealthWebMapper(version 1.0, https://github.com/HDMA-SDSU/HealthWebMapper) intending to include following new features:
+HealthWebMapper(version 1.5) is an under development new version of ![HealthWebMapper version 1.0](https://github.com/HDMA-SDSU/HealthWebMapper) intending to include following new features:
 
 1. Basemaps and overlayers switcher
-![alt text](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
+![layer switcher](https://github.com/haihonghuang/HealthWebMapper2/README images/layer switcher.png)
 2. Label function(in development)
 3. data input function(in development)
 4. spatial analysis function(in development)
