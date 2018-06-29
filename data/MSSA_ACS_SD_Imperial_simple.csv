@@ -1,0 +1,45 @@
+MSSA_ID,UNIT_COUNT,CNTY_FIPS,COUNTY,MSSA_NAME,DEFINITION,AREA_SQMI,POP,DENTIST,HISPANIC,WHITE,BLACK,NHS_BLACK,ASIAN,AGE_65OVER,AGE_18_64,AGE_UNDR18,AGE_UNDER5
+MSSA_ID,UNIT_COUNT,CNTY_FIPS,COUNTY,MSSA_NAME,DEFINITION,AREA_SQMI,POP,DENTIST,HISPANIC,WHITE,BLACK,NHS_BLACK,ASIAN,AGE_65OVER,AGE_18_64,AGE_UNDR18,AGE_UNDER5
+152,4,73,San Diego,Borrego Springs/Cuyamaca/Julian/Kentwood in the Pines/Laguna/Ocotillo Wells/Palomar/Pine Valley/Warner Springs,Frontier,1788.019088,9965,2,1756,8400,87,87,269,2529,5672,1764,454
+153.1,1,73,San Diego,Pala/Pauma Valley,Rural,112.9743827,7323,1,2193,5004,87,87,284,622,4627,2074,714
+153.2,3,73,San Diego,Rincon/San Pasqual/Valley Center,Rural,94.77429121,17165,8,3965,13655,39,4,307,2664,10435,4066,918
+154,1,73,San Diego,Barona/Moreno,Rural,48.05424153,2486,0,328,1756,32,26,43,439,1486,561,142
+155,7,73,San Diego,Alpine/Blossom Valley/Crest/Descanso/Glen Oaks/Harbison Canyon/Japatul/Palo Verde,Rural,142.7951244,33320,13,5227,29029,400,384,345,5562,21252,6506,1397
+156a,23,73,San Diego,Encinitas Central/Leucadia/Oceanside North and West/San Luis Rey/South Oceanside,Urban,21.79040028,111128,65,43267,78140,4412,3938,5700,13295,72421,25412,7743
+156b,19,73,San Diego,Carlsbad East/Encinitas East/Oceanside East,Urban,35.73875959,109982,75,20589,86488,2898,2758,8509,16206,70722,23054,5796
+156c,25,73,San Diego,Cardiff by the Sea/Eden Gardens/Harmony Grove/La Costa/Ocean Hills/Lomas Santa Fe/Olivehain/Rancho Santa Fe/San Marcos South/Solana Beach/Vista South,Urban,81.72658733,157079,117,20333,133235,2777,2466,10743,23063,98065,35951,9218
+156d,25,73,San Diego,Oceanside East/San Marcos West/Vista,Urban,54.38300273,128176,103,63017,99517,4064,3664,5662,13241,83000,31935,9029
+156e,26,73,San Diego,Escondido Central and South/San Marcos Central and East,Urban,25.61814246,134247,152,72413,110007,2507,2042,6181,13891,84526,35830,11389
+156f,18,73,San Diego,Escondido East/Hidden Meadows/Poway North,Urban,135.134211,101864,23,22503,81800,2171,2147,9385,15688,63163,23013,6192
+157,3,73,San Diego,Dulzura/Engineer Springs/Indian Springs/Jamacha/Jamul,Rural,208.2527023,18768,5,6126,14400,1172,1105,1433,1986,12377,4405,859
+158.1,5,73,San Diego,Ramona/Rock Haven/Rosemont,Rural,102.2935626,26062,11,7636,22705,329,311,199,2689,16576,6797,1691
+158.2,2,73,San Diego,Ballena/Four Corners/San Diego Country Estates,Urban,33.71526454,10833,2,1232,9993,160,160,101,1199,6795,2839,644
+159,1,73,San Diego,Buckman Springs/Canyon City/Jacumba/Morena Village/Tecate,Rural,452.1445525,6794,0,1949,5405,242,144,87,896,3952,1946,614
+160,10,73,San Diego,Bonsall/Camp Pendleton/Fallbrook/Live Oak Park/Rainbow/San Luis Rey Heights/Winterwarm,Urban,337.0054547,87309,78,24105,65437,4677,4552,3068,9310,57406,20593,9302
+161a,28,73,San Diego,Clairemont/Fiesta Shores/Linda Vista/Mission Beach/Sorrento/University City,Urban,28.21819878,146800,148,26705,101841,4419,4225,28780,18915,104451,23434,7099
+161b,25,73,San Diego,Bay Park/Five Points/Hillcrest Northwest/Mission Hills/Mission Valley/Morena/Normal Heights/Old Town/Serra Mesa,Urban,18.91774383,100320,97,18165,73908,5007,4632,10556,11645,73981,14694,5223
+161c,21,73,San Diego,Downtown/Golden Hill/Logan Heights,Urban,9.2967569,91031,105,51361,55321,8473,8007,3931,7358,65029,18644,5402
+161d,20,73,San Diego,Chollas Creek/City Heights/East San Diego/North Park/Oak Park/South Park,Urban,7.582194533,97571,35,48192,57465,12005,11517,14769,7407,63708,26456,8351
+161e,21,73,San Diego,College Heights/Hillcrest Southeast/Kensington/Rolando North/University Heights,Urban,8.355288051,91713,121,23694,64903,8704,8464,7543,9691,70028,11994,3859
+161f,17,73,San Diego,La Mesa/Rolando South,Urban,11.4151592,81594,113,21232,54485,9023,8648,8002,10359,53621,17614,6001
+161g,22,73,San Diego,Encanto/Lemon Grove Northwest/Lincoln Acres/National City East/Paradise Hills Southwest,Urban,11.89412643,97682,42,55962,43220,14598,14018,15315,10189,60408,27085,7922
+161h,18,73,San Diego,El Cajon Central and South/Fletcher Hills,Urban,11.19853098,87209,64,29373,62852,5797,5584,3729,8936,54575,23698,7040
+161i,19,73,San Diego,Calavo Gardens/Casa de Oro/Cottonwood/Grossmont/Homelands/Lemon Grove Central and North/Mount Helix/Rancho San Diego/Spring Valley,Urban,20.80350769,85901,24,26211,63506,8175,7663,4352,11177,53553,21171,5356
+161j,35,73,San Diego,Castle Park/Chula Vista Southwest/Imperial Beach West/Nestor East/Palm City/San Ysidro/South San Diego,Urban,46.56351557,155495,68,101943,123362,5505,5006,9185,17161,96353,41981,11208
+161k,18,73,San Diego,Chula Vista Central and Northwest/National City West,Urban,10.32632605,80000,104,56521,53050,4200,3844,6698,8252,50469,21279,5984
+161l,17,73,San Diego,Lemon Grove South/Paradise Hills,Urban,8.995491876,82472,7,30459,30037,13421,13057,23287,9090,52357,21025,5588
+161m,18,73,San Diego,Carlton Hills/El Cajon North/Eucalyptus Hills/Lake Murray/Loma Portal/San Carlos/Santee,Urban,37.78622755,85698,49,13413,72064,2023,1978,3724,13083,52778,19837,4988
+161n,17,73,San Diego,Civic Center/Coronado/Harbor Island/Imperial Beach East/Nestor West/Ocean Beach/Point Loma/Silver Strand,Urban,12.04361102,62608,47,9991,53885,2053,1959,2370,6859,45733,10016,3595
+161o,19,73,San Diego,Allied Gardens/Del Cerro/Grantville/Miramar/Tierrasanta,Urban,76.05200059,85573,93,13373,63352,4770,4568,9071,10782,55870,18921,5799
+161p,24,73,San Diego,Carmel Valley/Del Dios/Escondido South/Fairbanks Ranch/Poway Southeast/Rancho Bernardo Southeast/Rancho Penasquitos,Urban,67.78139217,151372,79,14312,97538,3080,2905,39590,13849,94875,42648,9880
+161q,18,73,San Diego,Poway Central/Poway Grove/Rancho Bernardo Southwest/Sabre Springs,Urban,42.30004271,79251,113,11376,56435,1802,1734,13414,11375,49144,18732,5287
+161r,22,73,San Diego,Crown Point/Del Mar/La Jolla/Pacific Beach,Urban,18.04729054,75594,101,6628,66695,640,640,4509,12539,53688,9367,2940
+161s,18,73,San Diego,Cockatoo Grove/Eastlake Greens/Otay Mesa,Urban,37.03790847,144697,37,80939,92663,7913,7420,26695,11992,92848,39857,10469
+161t,20,73,San Diego,Bonita/Chula Vista East/Eastlake/La Presa/Lynwood Hills/Rancho del Rey/Sunnyside/Sunny Vista,Urban,28.53923232,96857,71,48124,66019,5264,5059,12634,13167,60344,23346,5599
+161u,15,73,San Diego,Bostonia/Glenview/Granite Hills/Hillsdale/Johnstown/Lakeside/Riverview/Winter Gardens,Urban,24.15819607,83457,21,17419,72139,2124,1954,1982,10316,52899,20242,5863
+161v,22,73,San Diego,Mira Mesa/Scripps Miramar Ranch,Urban,27.3450127,112869,124,13330,51334,3793,3591,46499,10524,76336,26009,7148
+46,1,25,Imperial,Bard/Winterhaven,Rural,44.93551617,2594,1,931,873,6,3,58,386,1420,788,307
+47,4,25,Imperial,Bombay Beach/Calipatria/Desert Shores/Niland/Salton City/Salton Sea Beach,Frontier,2820.196762,17450,4,12199,11189,1607,1455,110,1940,11123,4387,1243
+48,14,25,Imperial,El Centro/Heber/Holtville/Imperial/Seeley,Rural,332.2018236,82390,32,65228,57291,1739,1558,1518,8463,49034,24893,6773
+49,6,25,Imperial,Calexico/Ocotillo,Rural,1007.706193,44657,7,40724,27373,1520,1419,714,4916,27563,12178,3356
+50,6,25,Imperial,Brawley/Westmorland,Rural,276.3327801,28110,8,22627,23177,549,503,203,3257,16241,8612,2433
