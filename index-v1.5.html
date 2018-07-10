@@ -1,0 +1,3568 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>San Diego County Cancer Mapping Viewer</title>
+	
+    <link rel="stylesheet" href="lib/jquery.jscrollpane.css" />
+
+	<!-- CHRIS CHANGE: Changing CSS to 0.7.3 to match the JS version -->
+    <link rel="stylesheet" href="css/leaflet-0.7.3.css" />
+
+	 <!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4/leaflet.ie.css"  /><![endif]-->
+	<!--[if lte IE 9]><link rel="stylesheet" href="http://leafletjs.com/examples/dist/leaflet.ie.css" /></link><![endif]-->
+	<!--[if lte IE 10]><link rel="stylesheet" href="http://leafletjs.com/examples/dist/leaflet.ie.css" /></link><![endif]-->
+	<!--[if lte IE 11]><link rel="stylesheet" href="http://leafletjs.com/examples/dist/leaflet.ie.css" /></link><![endif]-->	
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.css">
+
+	<!--script src="http://alasql.org/console/alasql.min.js"></script-->
+	<script src="http://cdn.jsdelivr.net/alasql/0.3/alasql.min.js"></script>	
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.css" />
+    <link rel="stylesheet" href="dist/Leaflet.ResizableControl.css" />
+  </head>
+  <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.12/jquery.mousewheel.js"></script>
+
+    <script src="lib/jquery.jscrollpane.min.js"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.js"></script>
+    <script src="dist/Leaflet.ResizableControl.js"></script>	
+    <script src="js/pearson-correlation.js"></script>	
+    <script src="js/alert.js"></script>	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<!--HHH CHANGE: grouped-layers plugin -->
+	<script src="src/leaflet.groupedlayercontrol.js"></script>
+    <link rel="stylesheet" href="src/leaflet.groupedlayercontrol.css">
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-88370504-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+	
+    <style type="text/css">
+        html, body { width: 100%; height: 100%; margin: 0;     font: 15px arial, sans-serif; }
+        #map1, #map2 { width: 49.5%; height: 600px; }
+        #map1 { float: left; }
+        #map2 { float: right; }
+		#chart_title {
+			background-color:#fff;
+			float: left;
+			width: 100%;
+			position:relative;
+			//top: 980px; 
+			overflow: visible;
+			z-index: 5;
+			
+		}
+		
+		#chart_area {
+			background-color:#fff;
+			//opacity: 0.6;
+			//left: -1.5%;
+			float: left;
+			width: 100%;
+			position:relative;
+			//top: 1065px; 
+			//height:100px;
+			z-index: 1;
+		}
+		#chart_left_title { 
+			width: 34%;
+			padding-top: 20px;
+			float: left; 
+			padding-left: 1%;
+			padding-right: 1%;
+			padding-bottom: 10px;
+			//position:absolute;
+			background-color:#fff;
+			//top: 980px;
+			font-size: 130%;
+			//z-index: 5;
+		}
+		#chart_divide { 
+			bottom: 20px;
+			width: 3px;
+			height:500px;
+			float: left; 
+			background-color:#A9A9A9;
+
+		}			
+		#chart_right_title { 
+			width: 65%;
+			padding-top: 20px;
+			padding-left: 10%;
+			padding-right: 10%;			
+			float: right; 
+			//position:absolute;
+			background-color:#fff;
+			//top: 980px;
+			font-size: 130%;
+			//z-index: 4;
+			
+		}		
+		#chart_left { 
+			padding-right:1%;
+			width: 34%;
+			float: left; 
+			position:relative;
+			overflow: visible;
+			background-color:#fff;
+			//top: 1062px; 
+			z-index: 5;
+		}
+		#chart_description { 
+			width: 34%;
+			float: left;
+			padding-top: 30px;			
+			//position:absolute;
+			background-color:#fff;
+			//top: 1062px; 
+			color: red;		
+			font-style: italic;
+		}		
+			
+		#chart_right {
+			padding-right:1%;		
+			width: 65%;
+			float: right; 
+			position:relative;
+			
+			//left:0px;
+			//right:-10 px;
+			//position:absolute;
+			//padding-left: 3cm;
+			background-color:#fff;
+			//top: 1062px;
+			overflow: visible;
+			z-index: 3;
+		}
+		
+
+		#input_area_left {
+			width: 50.5%;
+			height:122px;
+			background-color:#fff;
+			float: left;
+			font-size: 120%;
+		}
+		#input_area_right {
+			width: 49.5%;
+			height:122px;
+			background-color:#fff;
+			float: right; 
+			font-size: 120%;
+		}
+		.info {
+			padding: 6px 8px;
+			font: 14px/16px Arial, Helvetica, sans-serif;
+			background: white;
+			background: rgba(255,255,255,0.8);
+			box-shadow: 0 0 15px rgba(0,0,0,0.2);
+			border-radius: 5px;
+		}
+		.info h4 {
+			margin: 0 0 5px;
+			color: #777;
+		}
+
+		.legend {
+			text-align: left;
+			line-height: 18px;
+			color: #555;
+		}
+		.legend i {
+			width: 18px;
+			height:15px;
+			float: left;
+			margin-right: 8px;
+			opacity: 0.7;
+		}
+
+		#modalContainer {
+			font-size: 150%;
+			background-color:rgba(0, 0, 0, 0.3);
+			position:absolute;
+			width:100%;
+			height:100%;
+			top:0px;
+			left:0px;
+			z-index:10000;
+			background-image:url(tp.png); /* required by MSIE to prevent actions on lower z-index elements */
+		}
+		
+		div.scroll {
+			width:660px;
+			height:400px;
+			overflow:auto;
+		
+		}		
+		
+		#alertBox {
+			
+			position:relative;
+			width:700px;
+			min-height:100px;
+			margin-top:80px;
+			border:1px solid #666;
+			background-color:#fff;
+			background-repeat:no-repeat;
+			background-position:20px 30px;
+		}
+		
+		#modalContainer > #alertBox {
+			position:fixed;
+		}
+		
+		#alertBox h1 {
+			margin:0;
+			font:bold 0.9em verdana,arial;
+			background-color:#3073BB;
+			color:#FFF;
+			border-bottom:1px solid #000;
+			padding:4px 0px 5px 5px;
+		}
+		
+		#alertBox p {
+			font:0.7em verdana,arial;
+			overflow: auto;
+			min-height:200px;
+			max-height:500px;
+			padding-left:5px;
+			margin-left:10px;
+			padding-right:5px;
+			margin-right:10px;
+			padding-top:0px;
+			margin-top:0px;				
+		}
+		
+		#alertBox #closeBtn {
+			display:block;
+			position:absolute;
+			width: 383px;
+			//float:center;
+			left:140px;
+			top: 70px;
+			//margin:15px auto;
+			//padding:7px;
+			border:0 none;
+			font:0.7em verdana,arial;
+			text-transform:uppercase;
+			text-align:center;
+			color:#FFF;
+			background-color:#357EBD;
+			border-radius: 3px;
+			text-decoration:none;
+
+			
+			
+		}
+		
+		/* unrelated styles */
+		
+		#mContainer {
+			position:relative;
+			width:600px;
+			margin:auto;
+			padding:5px;
+			border-top:2px solid #000;
+			border-bottom:2px solid #000;
+			font:0.7em verdana,arial;
+		}
+		
+		h1,h2 {
+			margin:0;
+			padding:4px;
+			font:bold 1.5em verdana;
+			border-bottom:1px solid #000;
+		}
+		
+		code {
+			font-size:1.2em;
+			color:#069;
+		}
+		
+		#credits {
+			position:relative;
+			margin:25px auto 0px auto;
+			width:350px; 
+			font:0.7em verdana;
+			border-top:1px solid #000;
+			border-bottom:1px solid #000;
+			height:90px;
+			padding-top:4px;
+		}
+		
+		#credits img {
+			float:left;
+			margin:5px 10px 5px 0px;
+			border:1px solid #000000;
+			width:80px;
+			height:79px;
+		}
+		
+		.important {
+			background-color:#F5FCC8;
+			padding:2px;
+		}
+		
+		code span {
+			color:green;
+		}
+		.first {
+			width: 100%;
+			height:700px;
+			background-color:#ffffff;
+		}
+
+		.second {
+			width: 100%;
+			height: 1120px;
+			background: #ffffff;
+		}
+
+		
+		
+		
+    </style>
+</head>
+
+<body style ="font-family:Arial, Helvetica, sans-serif;">
+
+
+<div style="background-color:#303030 ;height:58px">
+	<a href="http://humandynamics.sdsu.edu" target="_blank" class="logo"><!-- Add the class icon to your logo image or logo icon to add the margining-->
+			<img src="images/HDMA_Logo_Small_For_Dark_Background_ICON.png" alt="HDMA Center@SDSU" style = "margin:5px 5px 5px 5px;width:130px;height:40px;float:left;">
+	</a>
+	<div style = "margin:12px 0px 0px 0px;float:left;">
+		<font size="5" color="white"> &nbsp;&nbsp;&nbsp; San Diego County Cancer Mapping Tool</font>
+	</div>
+	<a href="http://www.sdsu.edu/" target="_blank" class="logo"><!-- Add the class icon to your logo image or logo icon to add the margining-->
+			<img src="images/logo_sdsu.png" alt="SDSU" style = "margin:8px 15px 5px 5px;width:150px;height:30px;float:right;">
+	</a>
+	<a href="http://www.sandiegocounty.gov/hhsa/" style = "margin:5px 15px 5px 5px;width:180px;height:0px;float:right;" target="_blank" ><font color="00FFFF" size = "2">Data Source: Health & Human Services Agency - County of San Diego</font></a>
+
+</div>	
+<div style="background-color:#ffffff ;height:4px"></div>
+
+<div class="first" id="first">
+	<div id = "input_area" style="width:100%;height:10%;background-color:#ffffff;" >
+	<div id="input_area_left">
+<!--top left panel-->
+		<div id="menu_L1" style="background-color:#ffffff;width:365px;float:left;margin-bottom:0.1cm;">
+			<form name="ConditionSelect" action="">
+				<span id="condition_change">Cancer Type: </span>
+				<select name="condition" id="cancer_type" onChange="layerChange1()">				
+				</select>
+			</form>
+		</div>
+		
+		<div id="menu_L2" style="background-color:#ffffff;width:245px;float:left;margin-bottom:0.1cm;">
+			<form name="OutcomeSelect" action="">
+				<span id="outcome_change">Outcome: </span>
+				<select name="outcome" onChange="layerChange1()">				
+					<option value="Death">Death</option>
+					<option value="Hospitalization">Hospitalization</option>
+					<option value="ED Discharge">ED Discharge</option>				
+				</select>
+			</form>
+		</div>
+		
+		<div id="menu_L3" style="background-color:#ffffff;width:345px;float:left;margin-bottom:0.1cm;">
+			<form name="CaseSelect" action="">
+				<span id="case_change">Case: </span>
+				<select name="case" id="cancer_case" onChange="layerChange1()">					
+				</select>
+			</form>
+		</div>
+		
+		<div id="menu_L4" style="background-color:#ffffff;width:250px;float:left;margin-bottom:0.1cm;">
+			<form name="YearSelect1" action="">
+				<span id="year_change">Year: </span>
+				<select name="year1" onChange="layerChange1()">			
+					<option value="2010" >2010</option>
+					<option value="2011">2011</option>
+					<option value="2012">2012</option>					
+					<option value="2013" selected>2013</option>
+					<option value="Most Up-to-Date" >Most up-to-date</option>
+				</select>
+			</form>
+		</div>
+		<div id="menu_L7" style="background-color:#ffffff;width:180px;float:right; margin-top:0cm;  margin-right:0.9cm; margin-bottom:0.1cm;"	>
+			<button type="button" style="font-size:17px;width:200px;" onclick="corrleationAnalysis(dispValue1, dispValue2, allValue1, allValue2, true)">Correlation Analysis</button>
+			
+		</div>	
+		
+
+		
+	</div>	
+<!--top right panel-->	
+	<div id="input_area_right">
+		<div id="menu_R0" style="background-color:#ffffff;margin-bottom:0.1cm;">
+			<form name="layerSelect0" action="">
+				<span id="layer_change0">Select Socioeconomic and Demographic Factors:</span>
+				<select name="ACSdata0" id="ACSdata_SDFgroup" onChange="yearChange2()">
+				</select>
+			</form>		
+		</div>
+		
+		<div id="menu_R1" style="background-color:#ffffff;margin-bottom:0.1cm;">
+	
+			<form name="layerSelect" action="">
+				<span id="layer_change">Select: </span>
+				<select name="ACSdata" id="ACSdata_options" onChange="layerChange2()">
+				</select>
+			</form>
+		</div>
+		
+		<div id="menu_R3" style="background-color:#ffffff;width:300px;float:left;margin-bottom:0.1cm;">
+			<form name="NormalizationSelect" action="">
+				<span id="normalization_change">Normalization: </span>
+				<select name="normalization" id="normalization_options" onChange="layerChange2()">
+					<option value="none">none</option>
+					<option value="Total Population" selected>Total Population</option>
+					<option value="area">Area</option>					
+				</select>
+			</form>
+		</div>
+		
+		<div id="menu_R2" style="background-color:#ffffff;width:140px;float:left;margin-bottom:0.1cm;">
+			<form name="YearSelect2" action="">
+				<span id="year_change">Year: </span>
+				<select name="year2" onChange="yearChange2()">
+					<option value="2010" >2010</option>
+					<option value="2011">2011</option>
+					<option value="2012">2012</option>
+					<option value="2013" selected>2013</option>	
+					<option value="Average">Average</option>	
+				</select>
+			</form>
+		</div>
+		
+
+		
+	</div>
+	</div>
+
+	
+
+    <div id="map1"></div>
+		
+		
+    <div id="map2"></div>
+</div>		
+	
+<div class="second" id="second">		
+	<div id="chart_title">
+
+		<div id="chart_left_title"></div> 
+		<div id="chart_right_title"></div>
+	</div>	
+	
+	
+		
+    <div id="chart_area"> 
+				
+		<div id='chart_left'> </div>
+		<div id='chart_divide'></div>	 
+		<div id='chart_right'></div>
+		<div id='chart_description'>  </div>
+	</div>
+</div>	
+
+    <script src="debug/L.Map.Sync.js"></script>
+	<script type="text/javascript" src="js/polygon.js"></script>
+	<script type="text/javascript" src="js/cancer.js"></script>
+	<script type="text/javascript" src="js/header_descriptions.js"></script>
+	<script type="text/javascript" src="js/category_descriptions_master.js"></script>
+	<script type="text/javascript" src="js/CENSUS2010_v2.js"></script>
+	<script type="text/javascript" src="js/CENSUS2011_v2.js"></script>
+	<script type="text/javascript" src="js/CENSUS2012_v2.js"></script>
+	<script type="text/javascript" src="js/CENSUS2013_v2.js"></script>
+	<script type="text/javascript" src="js/NoShown.js"></script>
+	<script type="text/javascript" src="js/hospital.js"></script>
+	<script type="text/javascript" src="js/freeway.js"></script>
+	<script type="text/javascript" src="js/cancer_center.js"></script>
+	<!--script src="test.js" type="text/javascript"></script-->
+
+	
+    <script type="text/javascript">
+
+	
+		var SELECTED_LAYER1;        // Global variable
+		var SELECTED_LAYER2;        // Global variable
+
+
+		var disease = "Each Cancer"
+		
+		var ALERT_TITLE = "Warning" ;
+		var ALERT_TITLE1 = "Disclaimer";
+		var ALERT_TITLE2= "Correlation Analysis";
+		var ALERT_BUTTON_TEXT = "I understand & Proceed";		
+	
+		var geojson1 = null;
+		//var geojsonPoly1 = null;
+		var info1    = null;
+		var legend1  = null;
+		
+		var geojson2 = null;
+		//var geojsonPoly2 = null;
+		var info2    = null;
+		var legend2  = null;
+		var message;
+		
+		var width = $(window).width();
+		var height = $(window).height();
+
+		if (width < 1000) {
+			alert(
+			
+		
+		"</br></br></br></br><div class = 'scroll'></br>" +
+		
+		"<div style = 'color:red;font-weight: bold'> Please use Goolge Chrome or Firefox browser for best performance. Some functions are not currently supported on Interent Explorer. </div></br>" +
+		
+		"<font color='blue'>To make this applicaiton work properly, the resolution of your browser has to be over width 1000px. Please increase the resoluton of your browser, or user a monitor which supports the higher resolution. </font>" +
+
+		
+		 "<div style= 'color:black;>   </div>" +	
+		 "<div style= 'color:blue;></br>Please interpret with these results with caution - correlation, as this graph shows, is not the same as causation. This tool visualizes patterns that can be used for exploratory analysis and hypothesis testing in order to form more complex and realistic models of cancer mortality, but should not alone be interpreted as a valid tool for prediction of cancer outcomes.</div> </br>" +
+		
+		"<div>While the data have been tested for accuracy and are properly functioning, The San Diego Foundation, SDSU, and all the nonprofit organizations featured on this site (The Project Team) disclaims any responsibility for the accuracy or correctness of the data.</div></br>" +
+		
+		"<div>THE FOREGOING WARRANTY IS EXCLUSIVE AND IN LIEU OF ALL OTHER WARRANTIES OR MERCHANTABILITY, FITNESS FOR PARTICULAR PURPOSE AND/OR ANY OTHER TYPE WHETHER EXPRESSED OR IMPLIED.</div></br>" +
+		
+		"<div>In no event shall The Project Team become liable to users of these data, or any other party, for any loss or damages, consequential or otherwise, including but not limited to time, money, or goodwill, arising from the use, operation or modification of the data. </div></br>"+
+		
+		"<div>In using these data, users further agree to indemnify, defend, and hold harmless The Project Team for any and all liability of any nature arising out of or resulting from the lack of accuracy or correctness of the data, or the use of the data.</div></br>" +
+		
+		"<div>To assist The Project Team in the maintenance of the data, users should provide The Project Team, at the email address shown below, information concerning errors or discrepancies found in using the data.</div> </br>" +
+		
+		"<div style= 'color:blue';> E-mail: hdmasdsu@gmail.com </div>" +
+		
+		"<div style= 'color:blue';> Website: http://humandynamics.sdsu.edu</div></br>" +
+		
+		"<div style= 'color:black;>In using the data, users should be aware that these data are generalized and not parcel based, and were created for use in regional planning projects.</div></br>" +
+		
+		"<div style= 'color:black;>Please acknowledge The Project Team as a source when The Project Team data are used in the preparation of reports, papers, publications, maps, and other products.	</div></br>" +
+		
+		"</div>"		
+		
+		);
+		
+		}		
+		
+		google.charts.load('current', {packages: ['corechart', 'bar']}); //Call Google Chart
+
+		// make most up-to-date cancer data of 4 year (2010, 2011, 2012, 2013) -> CANCER
+		makeUptodateCancerData();
+		// make average cancer data of 4 year (2010, 2011, 2012, 2013) -> CANCER
+		makeAverageCancerData();
+		// make average census data of 4 year (2010, 2011, 2012, 2013) -> CENSUSaverage
+		var CENSUSaverage = [];
+		makeAverageCensusData();
+		
+		// change header abbreviations of 4 years data to full name by HEADER_DESCRIPTIONS
+		// it will be change only one time at very beginning		
+		changeHeaderFromAbbreviationToFullname();
+		
+		// Delete some SDFs from CENSUS2010, CENSUS2011, CENSUS2012, CENSUS2013, CENSUSaverage.
+		// It will be delete only one time at very beginning.
+		deleteSomeEconomicFactorsfromCENSUS(MUST_REMOVE_SDFs);
+		
+		// Delete this SDFs from CATEGORY_DESCRIPTIONS_MASTER
+		// Match SDFgroup and SDFdetail both.
+		deleteSomeEconomicFactorsfromCATEGORY(MUST_REMOVE_SDFs);
+		
+		// set the case options
+		var CANCER_DESCRIPTIONS = getNewCANCERs(document.layerSelect0.ACSdata0.value, document.layerSelect.ACSdata.value);
+		setSelectField(Object.keys(CANCER_DESCRIPTIONS), 0, "cancer_type", "Lung Cancer");
+		setSelectField(CANCER_DESCRIPTIONS[document.ConditionSelect.cancer_type.value], 0, "cancer_case", "Total_Rate");
+
+		// Reset Socio-economic and Demographic Factors (SDF) using Left_Map_Type and Left_Map_Case.
+		CATEGORY_DESCRIPTIONS = getNewSDFs(document.ConditionSelect.condition.value, document.CaseSelect.case.value);
+		setSelectField(getSDFgroups(document.YearSelect2.year2.value), 0, "ACSdata_SDFgroup", "Economic Factor");
+		
+		var CENSUS = getCENSUSdata(document.YearSelect2.year2.value);     // CENSUS is global variable
+
+		if (document.YearSelect2.year2.value == "2010")  
+			setSelectField(CATEGORY_DESCRIPTIONS["2010"][document.layerSelect0.ACSdata0.value], 0, "ACSdata_options");
+		if (document.YearSelect2.year2.value == "2011")  
+			setSelectField(CATEGORY_DESCRIPTIONS["2011"][document.layerSelect0.ACSdata0.value], 0, "ACSdata_options");
+		if (document.YearSelect2.year2.value == "2012")  
+			setSelectField(CATEGORY_DESCRIPTIONS["2012"][document.layerSelect0.ACSdata0.value], 0, "ACSdata_options");
+		if (document.YearSelect2.year2.value == "2013")  
+			setSelectField(CATEGORY_DESCRIPTIONS["2013"][document.layerSelect0.ACSdata0.value], 0, "ACSdata_options", "Professional, Scientific, Management, Administrative Employed Civilians Age 16 and Older");
+		if (document.YearSelect2.year2.value == "Average")  
+			setSelectField(CATEGORY_DESCRIPTIONS["Average"][document.layerSelect0.ACSdata0.value], 0, "ACSdata_options");
+
+		var dispValue1 = {};    // key: area-name, value: display value of left
+		var dispValue2 = {};    // key: area-name, value: display value of right
+		
+		var allValue1 = {};     // key: condition (Cancer Type), value: dispValue1
+		var allValue2 = {};     // key: layer (ACSdata_options), value: dispValue2
+		
+		var csv_L_list = [];    // csv records for left
+		var csv_R_list = [];    // csv records for right
+		
+		var MAX_COLUMN_OF_RIGHT_CHART = 50;    // maximum number of column on right chart
+		
+		// build SRA_Names object for searching SRANum using SRA_Name (No good routine)
+		var SRA_Names = {};    // key: SRA_Name, value: SRANum
+		// Search SRANum in CA.features and store it to the geometry
+		for (var j=0; j<CA.features.length; j++) {
+			SRA_Names[CA.features[j].properties.SRA_Name] = CA.features[j].properties["SRA"] * 1;
+		}	
+		
+		// The color options for two maps
+		var COLOR_CLASS = {
+			"Green5"  : ["#ffffcc", "#c2e699", "#78c679", "#31a354", "#006837"],
+			"Green6"  : ["#ffffcc", "#d9f0a3", "#addd8e", "#78c679", "#31a354", "#006837"],
+			"Green7"  : ["#ffffcc", "#d9f0a3", "#addd8e", "#78c679", "#41ab5d", "#238443", "#005a32"],
+			"Green8"  : ["#ffffe5", "#f7fcb9", "#d9f0a3", "#addd8e", "#78c679", "#41ab5d", "#238443", "#005a32"],
+			"Green9"  : ["#ffffe5", "#f7fcb9", "#d9f0a3", "#addd8e", "#78c679", "#41ab5d", "#238443", "#006837", "#004529"],
+			"Blue5"   : ["#ffffcc", "#a1dab4", "#41b6c4", "#2c7fb8", "#253494"],
+			"Blue6"   : ["#ffffcc", "#c7e9b4", "#7fcdbb", "#41b6c4", "#2c7fb8", "#253494"],
+			"Blue7"   : ["#ffffcc", "#c7e9b4", "#7fcdbb", "#41b6c4", "#1d91c0", "#225ea8", "#0c2c84"],
+			"Blue8"   : ["#ffffd9", "#edf8b1", "#c7e9b4", "#7fcdbb", "#41b6c4", "#1d91c0", "#225ea8", "#0c2c84"],
+            "Blue9"   : ["#ffffd9", "#edf8b1", "#c7e9b4", "#7fcdbb", "#41b6c4", "#1d91c0", "#225ea8","#253494","#081d58"],			
+			"Orange5" : ["#ffffb2", "#fecc5c", "#fd8d3c", "#f03b20", "#bd0026"],
+			"Orange6" : ["#ffffb2", "#fed976", "#feb24c", "#fd8d3c", "#f03b20", "#bd0026"],
+			"Orange7" : ["#ffffb2", "#fed976", "#feb24c", "#fd8d3c", "#fc4e2a", "#e31a1c", "#b10026"],
+			"Orange8" : ["#ffffcc" ,"#ffeda0", "#fed976", "#feb24c", "#fd8d3c", "#fc4e2a", "#e31a1c ", "#b10026"],
+            "Orange9" : ["#ffffcc" ,"#ffeda0", "#fed976", "#feb24c", "#fd8d3c", "#fc4e2a", "#e31a1c ", "#bd0026","#800026"],			
+			"Red5"    : ["#fee5d9", "#fcae91", "#fb6a4a", "#de2d26", "#a50f15"],
+			"Red6"    : ["#fee5d9", "#fcbba1", "#fc9272", "#fb6a4a", "#de2d26", "#a50f15"],
+			"Red7"    : ["#fee5d9", "#fcbba1", "#fc9272", "#fb6a4a", "#ef3b2c", "#cb181d", "#99000d"],
+			"Red8"    : ["#fff5f0", "#fee0d2", "#fcbba1", "#fc9272", "#fb6a4a", "#ef3b2c", "#cb181d", "#99000d"],
+			"Red9"    : ["#fff5f0", "#fee0d2", "#fcbba1", "#fc9272", "#fb6a4a", "#ef3b2c", "#cb181d", "#a50f15", "#67000d"],
+			"Pink5"   : ["#feebe2", "#fbb4b9", "#f768a1", "#c51b8a", "#7a0177"],
+			"Pink6"   : ["#feebe2", "#fcc5c0", "#fa9fb5", "#f768a1", "#c51b8a", "#7a0177"],
+			"Pink7"   : ["#feebe2", "#fcc5c0", "#fa9fb5", "#f768a1", "#dd3497", "#ae017e", "#7a0177"],
+			"Pink8"   : ["#fff7f3", "#fde0dd", "#fcc5c0", "#fa9fb5", "#f768a1", "#dd3497", "#ae017e", "#7a0177"],
+			"Pink9"   : ["#fff7f3", "#fde0dd", "#fcc5c0", "#fa9fb5", "#f768a1", "#dd3497", "#ae017e", "#7a0177","#49006a"]
+		};
+		
+		var center = [33.0, -116.9]; // put the coordiantes of the center of your map
+
+        var stamenOptions = {
+
+            minZoom: 9,
+            maxZoom: 18
+        };		 
+		 
+		// CHRIS CHANGE: Create two dots layers (one for each map)
+		var hospital1 = new L.LayerGroup();
+		var hospital2 = new L.LayerGroup();
+		
+		var cancer_center_1 = new L.LayerGroup();
+		var cancer_center_2 = new L.LayerGroup();
+		//HHH CHANGE: Create two freeway layers (one for each map)
+		var freeway1 = new L.layerGroup();
+		var freeway2 = new L.layerGroup();
+		// BASE MAPS
+		var Toner_1 = L.tileLayer('http://{s}.tile.stamen.com/toner-lite/{z}/{x}/{y}.png', stamenOptions);
+        var Toner_2 = L.tileLayer('http://{s}.tile.stamen.com/toner-lite/{z}/{x}/{y}.png', stamenOptions);
+		
+		var Terrain_1 = L.tileLayer('http://{s}.tile.stamen.com/terrain/{z}/{x}/{y}.png', stamenOptions);
+        var Terrain_2 = L.tileLayer('http://{s}.tile.stamen.com/terrain/{z}/{x}/{y}.png', stamenOptions);
+		
+		var OpenStreetMap_Mapnik_1 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 19, attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
+		var OpenStreetMap_Mapnik_2 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 19, attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
+        
+		//var OpenStreetMap_BlackAndWhite_1 = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {maxZoom: 18,attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
+		//var OpenStreetMap_BlackAndWhite_2 = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {maxZoom: 18,attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
+		
+		var Esri_WorldImagery_1 = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'});
+		var Esri_WorldImagery_2 = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'});
+
+		var Esri_NatGeoWorldMap_1 = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {attribution: 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC',maxZoom: 16});
+		var Esri_NatGeoWorldMap_2 = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {attribution: 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC',maxZoom: 16});
+		// HHH change checkbox：hospital and freeway layers default is off 
+        var map1 = L.map('map1', {
+            layers: [Toner_1],
+            center: center,
+            zoom: 10,	
+			//maxBounds: bounds,
+			//maxBoundsViscosity: 1.0
+        });
+		// HHH CHANGE: change position of layercontrol, not inside render function
+		var groupedlayers1 = {
+			"Overlayers":{
+			"Hospital": hospital1,
+			"Freeway": freeway1,
+			"Moores Cancer Center": cancer_center_1
+			},
+			"Basemaps":{
+			"Black&White": Toner_1,
+			"Terrain": Terrain_1,
+			"OpenStreetMap": OpenStreetMap_Mapnik_1,
+			"World Imagery": Esri_WorldImagery_1,
+			"Natitonal Geographic Map": Esri_NatGeoWorldMap_1		
+			},
+		
+		};
+		var options = {
+			// Make the "Landmarks" group exclusive (use radio inputs)
+			exclusiveGroups: ["Basemaps"],
+			// Show a checkbox next to non-exclusive group labels for toggling all
+			//groupCheckboxes: true
+			};
+		
+		L.control.groupedLayers(groupedlayers1, options).addTo(map1)
+		//L.control.layers(baseLayers1,overlays1).addTo(map1);
+		/*
+		map1.setMaxBounds([
+			[32.534156, -117.596147],
+			[33.505025 , -116.081090]
+		]);*/			
+		map1.scrollWheelZoom.disable();
+        map1.attributionControl.setPrefix('');
+
+        var map2 = L.map('map2', {
+            layers: [Toner_2],
+            center: center,
+            zoomControl: false
+        });
+		
+		var groupedlayers2 = {
+		"Overlayers":{
+			"Hospital": hospital2,
+			"Freeway": freeway2,
+			"Moores Cancer Center": cancer_center_2
+			},
+		"Basemaps":{
+			"Black&White": Toner_2,
+			"Terrain": Terrain_2,
+			"OpenStreetMap": OpenStreetMap_Mapnik_2,
+			"World Imagery": Esri_WorldImagery_2,
+			"Natitonal Geographic Map": Esri_NatGeoWorldMap_2		
+			}
+		};
+		
+		L.control.groupedLayers(groupedlayers2, options).addTo(map2)
+		/*
+		map2.setMaxBounds([
+			[32.534156, -117.596147],
+			[33.505025 , -116.081090]
+		]);*/				
+		map2.scrollWheelZoom.disable();
+		map2.attributionControl.setPrefix('');
+		
+        map1.sync(map2);
+        map2.sync(map1);
+		
+		var html_left = "<div style='float:left;font-size:15px;'> Advanced Option </div>"+
+		
+		"<div id='menu_L5' style='float:left;font-size:15px;margin-top:0.2cm;'> " +
+			"<form name='classSelect1' action=''>" +
+				"<span id='class_change'> </span>" +
+				"<select name='classified' onChange='layerChange1()'>" +
+					"<option value='equal'>Equal Classification</option>" +
+					"<option value='quantile' selected>Quantile Classification</option>" +
+				"</select>" +
+			"</form>	" +
+		"</div>" +
+		
+		"<div id='menu_L6' style='float:left;font-size:15px;margin-top:0.1cm;'>" +
+			"<form name='colorNumSelect1' action=''>" +
+				"<span id='colorNum_change'>Color : </span>" +
+				"<select name='colorNum' onChange='layerChange1()'>" +
+					"<option value='Green'>Green</option>" +
+					"<option value='Blue'>Blue</option>" +
+					"<option value='Orange' selected>Orange</option>" +
+					"<option value='Red'>Red</option>" +
+					"<option value='Pink'>Purple</option>" +
+				"</select>" +
+			"</form>	" +
+		"</div>" +
+		
+		"<div id='menu_L7' style='float:left;font-size:15px;margin-top:0.1cm;'>" +
+			"<form name='classNumSelect1' action=''>" +
+				"<span id='classNum_change'>Class: </span>" +
+				"<select name='classNum' onChange='layerChange1()'>" +
+					"<option value='5'>5</option>" +
+					"<option value='6'>6</option>" +
+					"<option value='7'>7</option>" +
+					"<option value='8' selected>8</option>" +
+					"<option value='9'>9</option>" +
+				"</select>" +
+			"</form>	" +
+		"</div>" 
+
+		var resizablebottomleft = new L.ResizableControl({
+            position: 'bottomleft',
+            minimizedHeight: 150,
+            minimizedWidth: 220,
+            enlargedHeight: 0.08,
+            enlargedWidth: 0.25,
+            enlargeCallback: function(e) {},
+            minimizeCallback: function(e) {},
+            contentClassName: "resizable-control-content",
+            scrollPaneClassName: "resizable-control-scrollpane",
+            className: "resizable-control-container",
+            jscrollpane: true,
+            appendOnAdd: function(divElement) {}
+        });
+		map1.addControl(resizablebottomleft);
+		resizablebottomleft.setContent(html_left);
+		
+		
+		var html_right = "<div style='float:left;font-size:15px;'> Advanced Option </div>"+
+		
+		"<div id='menu_R3' style='float:left;font-size:15px;margin-top:0.2cm;'> " +
+			"<form name='classSelect2' action=''>" +
+				"<span id='class_change'> </span>" +
+				"<select name='classified' onChange='layerChange2()'>" +
+					"<option value='equal'>Equal Classification</option>" +
+					"<option value='quantile' selected>Quantile Classification</option>" +
+				"</select>" +
+			"</form>	" +
+		"</div>" +
+		
+		"<div id='menu_R4' style='float:left;font-size:15px;margin-top:0.1cm;'>" +
+			"<form name='colorNumSelect2' action=''>" +
+				"<span id='colorNum_change'>Color : </span>" +
+				"<select name='colorNum' onChange='layerChange2()'>" +
+					"<option value='Green'>Green</option>" +
+					"<option value='Blue'>Blue</option>" +
+					"<option value='Orange' selected>Orange</option>" +
+					"<option value='Red'>Red</option>" +
+					"<option value='Pink'>Purple</option>" +
+				"</select>" +
+			"</form>	" +
+		"</div>" +
+		
+		"<div id='menu_R7' style='float:left;font-size:15px;margin-top:0.1cm;'>" +
+			"<form name='classNumSelect2' action=''>" +
+				"<span id='classNum_change'>Class: </span>" +
+				"<select name='classNum' onChange='layerChange2()'>" +
+					"<option value='5'>5</option>" +
+					"<option value='6'>6</option>" +
+					"<option value='7'>7</option>" +
+					"<option value='8' selected>8</option>" +
+					"<option value='9'>9</option>" +
+				"</select>" +
+			"</form>	" +
+		"</div>" 
+
+		var resizablebottomleft = new L.ResizableControl({
+            position: 'bottomleft',
+            minimizedHeight: 150,
+            minimizedWidth: 220,
+            enlargedHeight: 0.08,
+            enlargedWidth: 0.25,
+            enlargeCallback: function(e) {},
+            minimizeCallback: function(e) {},
+            contentClassName: "resizable-control-content",
+            scrollPaneClassName: "resizable-control-scrollpane",
+            className: "resizable-control-container",
+            jscrollpane: true,
+            appendOnAdd: function(divElement) {}
+        });
+		map2.addControl(resizablebottomleft);
+		resizablebottomleft.setContent(html_right);
+/*		
+	var html_analysis = "<div style='float:left;font-size:15px;'> Run Analysis </div>"+
+		
+		"<div id='menu_R3' style='float:left;font-size:15px;margin-top:0.2cm;'> " +
+			"<form name='classSelect1' action=''>" +
+				"<span id='class_change'> </span>" +
+				"<select name='classified' onChange='layerChange1()'>" +
+					"<option value='equal'>Equal Classification</option>" +
+					"<option value='quantile' selected>Quantile Classification</option>" +
+				"</select>" +
+			"</form>	" +
+		"</div>" +
+		
+		"<div id='menu_R4' style='float:left;font-size:15px;margin-top:0.1cm;'>" +
+			"<form name='colorNumSelect2' action=''>" +
+				"<span id='colorNum_change'>colors: </span>" +
+				"<select name='colorNum' onChange='layerChange1()'>" +
+					"<option value='5'>5 red</option>" +
+					"<option value='6'>6 blue</option>" +
+					"<option value='8' selected>8 orange</option>" +
+				"</select>" +
+			"</form>	" +
+		"</div>" 
+
+		var resizablebottomleft = new L.ResizableControl({
+            position: 'topleft',
+            minimizedHeight: 70,
+            minimizedWidth: 180,
+            enlargedHeight: 0.15,
+            enlargedWidth: 0.32,
+            enlargeCallback: function(e) {},
+            minimizeCallback: function(e) {},
+            contentClassName: "resizable-control-content",
+            scrollPaneClassName: "resizable-control-scrollpane",
+            className: "resizable-control-container",
+            jscrollpane: true,
+            appendOnAdd: function(divElement) {}
+        });
+		map2.addControl(resizablebottomleft);
+		resizablebottomleft.setContent(html_analysis);
+*/
+		
+		layerChange1();
+		layerChange2();
+		corrleationAnalysis(dispValue1, dispValue2, allValue1, allValue2, false);
+		
+		var layersControl = new L.Control.Layers({
+			//'CloudMade': cloudmade
+		}, {
+			//'Some marker': marker,
+			//'vector layer': geojson
+		});	
+
+		//map2.addControl(layersControl);
+
+
+	var data = new Array(
+						new Array(21,54,60,78,82),
+						new Array(20,54,54,65,45)
+			);
+	//console.log(pearsonCorrelation(data,0,1))	
+
+function getCorrleationValue(value1, value2) {
+	var result = [0.0];
+	//alert(dump(value1));
+	//alert(dump(value2));
+	var data = [];
+	var data1 = [];
+	var data2 = [];
+	var idata1 = "";
+	var idata2 = "";
+	for (var key in value1) {
+		idata1 += "'"+key+"':"+value1[key]+", ";
+	}
+	for (var key in value2) {
+		idata2 += "'"+key+"':"+value2[key]+", ";
+	}
+	var sdata1 = "";
+	var sdata2 = "";
+	for (var key in value1) {
+		if (key == 'selectedCase') {
+			//alert(value1[key]);
+			continue;
+		}
+		if (value1[key] == "Data not shown") continue;
+		if (!(key in value2)) continue;
+		if (value2[key] == "Data not shown") continue;
+		sdata1 += "'"+key+"':"+value1[key]+", ";
+		sdata2 += "'"+key+"':"+value2[key]+", ";
+		data1.push(value1[key]);
+		data2.push(value2[key]);
+	}
+	var data = [data1, data2];
+	//alert(dump(data1));
+	//alert(dump(data2));
+	var correlationValue = pearsonCorrelation(data,0,1);
+	result[0] = correlationValue.toFixed(2) * 1;
+	result[1] = data1.length;
+	result[2] = sdata1;
+	result[3] = sdata2;
+	result[4] = idata1;
+	result[5] = idata2;
+	//alert("result:"+result[0]+"  count:"+result[1]+"  selected1: "+sdata1+"  selected2: "+sdata2+"  input1: "+idata1+"  input2: "+idata2);
+	return result;
+}
+
+/*
+	chart_L_title = "<div style= 'LINE-HEIGHT:20px;overflow:visible;'><center> The Correlation (Pearson’s r) between </br><font size='3' color='#008080'> ";
+	chart_L_title += document.CaseSelect.case.value + " of ";
+	chart_L_title += document.OutcomeSelect.outcome.value + " due to ";
+	chart_L_title += disease;
+
+	if ( document.YearSelect1.year1.value == "Most Up-to-Date") {
+		chart_L_title += ", Most Up-to-Date";
+	}
+	else{
+		chart_L_title +=  document.YearSelect1.year1.value;
+	}
+	//chart_L_title +=  "</font>&nbsp;&nbsp;&nbsp; &amp;  &nbsp;  <font size='3' color='#008080'> "	
+	//chart_L_title += document.YearSelect1.year1.value + "</font>&nbsp;&nbsp;&nbsp; &amp;  &nbsp;  <font size='3' color='#008080'> ";
+	if ( document.NormalizationSelect.normalization.value == "none") {
+		chart_L_title += document.layerSelect.ACSdata.value  ;
+	} 
+	else if ( document.NormalizationSelect.normalization.value == "area") {
+		chart_L_title += document.layerSelect.ACSdata.value + " (/mi²)";
+	} 	
+	else {
+		chart_L_title += document.layerSelect.ACSdata.value + " (%)";
+	}
+	if ( document.YearSelect2.year2.value == "average"){
+		chart_L_title += ", Average of 4 Years ";
+	}
+	else {
+		chart_L_title += " in " + document.YearSelect2.year2.value;
+	}	
+	//chart_L_title += document.YearSelect2.year2.value + " </font></center></div>  ";
+	document.getElementById("chart_left_title").innerHTML = chart_L_title;
+	*/
+// Reference: https://github.com/agershun/alasql/wiki/Csv
+function exportData_left(dispValue1, dispValue2, allValue1, allValue2) {
+	var csv_L_filename  = "";
+	csv_L_filename  = document.CaseSelect.case.value + " of ";
+	csv_L_filename += document.OutcomeSelect.outcome.value + " due to ";
+	csv_L_filename += disease;
+	csv_L_filename += " " + document.YearSelect1.year1.value + " and ";
+	if ( document.NormalizationSelect.normalization.value == "none") {
+		csv_L_filename += document.layerSelect.ACSdata.value  + " in ";
+	} 
+	else if ( document.NormalizationSelect.normalization.value == "area") {
+		csv_L_filename += document.layerSelect.ACSdata.value + " (mi²) ";
+	}	
+	else {
+		csv_L_filename += " " + document.layerSelect.ACSdata.value + " (%) ";
+	}
+	csv_L_filename += document.YearSelect2.year2.value + ".csv";
+	//alert(csv_L_filename);	
+	alasql('SELECT * INTO CSV("'+csv_L_filename+'", {headers:false, separator:","}) FROM ?',[csv_L_list]);
+}
+
+function exportData_right(dispValue1, dispValue2, allValue1, allValue2) {
+	var csv_R_filename  = "";
+	csv_R_filename  = document.CaseSelect.case.value + " of ";
+	csv_R_filename += document.OutcomeSelect.outcome.value + " due to ";
+	csv_R_filename += document.ConditionSelect.condition.value + " ";
+	csv_R_filename += document.YearSelect1.year1.value + " and ";
+	if ( document.NormalizationSelect.normalization.value == "none") {
+		csv_R_filename += "Each Socioeconomic and Demographic Factors ";
+	} 
+	else if ( document.NormalizationSelect.normalization.value == "area") {
+		csv_R_filename += "Each Socioeconomic and Demographic Factors (mi²) ";
+	} 	
+	else {
+		csv_R_filename += "Each Socioeconomic and Demographic Factors (%) ";
+	}
+	csv_R_filename += document.YearSelect2.year2.value + " .csv";
+	//alert(csv_R_filename);	
+	alasql('SELECT * INTO CSV("'+csv_R_filename+'", {headers:false, separator:","}) FROM ?',[csv_R_list]);
+}
+
+function create_csv_left_list(allValue1, dispValue2, rSquares) {
+	var csv_L_map = {};    // key: area-name, value: {dispValue2[area-name], allValue1[Cancer type].[area-name1], allValue1[Cancer type].[area-name2], 	
+	// Build index of cancer types
+	var idx = 0;
+	var dummy_values = [""];
+	var idx_cancer_type = {};
+	var csv_title = ["SRA", "Region Name", dispValue2['selectedLayer'].replace('Total ','')];
+				  // [SRA,Region Name,population,Bladder,Brain,Cervical, ... ,Stomach,Uterine]
+	for (var cancer_type in allValue1) {
+		idx += 1;
+		dummy_values.push("");
+		idx_cancer_type[cancer_type] = idx;
+		csv_title.push(cancer_type.replace(' Cancer',''));
+	}
+	// Build R square record
+	var csv_rSquare = ["R", "", ""];
+	csv_rSquare.concat(dummy_values.slice(0));
+	for (var cancer_type in rSquares) {
+		var rSquare_value = rSquares[cancer_type];
+		csv_rSquare[idx_cancer_type[cancer_type]+2] = rSquare_value;
+	}
+	// Load all cancer values to csv_L_map 
+	for (var cancer_type in allValue1) {
+		var cancer_value = allValue1[cancer_type];
+		for (var area_name in cancer_value) {
+			var area_value = cancer_value[area_name]
+			if (!(area_name in csv_L_map)) {
+				csv_L_map[area_name] = dummy_values.slice(0);
+			}
+			var values = csv_L_map[area_name];
+			if (area_value != "Data not shown") values[idx_cancer_type[cancer_type]] = area_value;
+			csv_L_map[area_name] = values;
+		}
+	}
+	// Load a ACSdata values to csv_L_map 
+	for (var area_name in dispValue2) {
+		var acsdata_value = dispValue2[area_name];
+		if (area_name == 'selectedLayer') {
+			continue;
+		}
+		if (!(area_name in csv_L_map)) {
+			csv_L_map[area_name] = dummy_values.slice(0);
+		}
+		var values = csv_L_map[area_name];
+		if (acsdata_value != "Data not shown") values[0] = acsdata_value;
+		csv_L_map[area_name] = values;
+	}
+	// convert csv_L_map to csv_list
+	var csv_list = [csv_title, csv_rSquare];
+	for (var area_name in csv_L_map) {
+		var first_element = [SRA_Names[area_name], area_name];
+		//var values = csv_L_map[area_name];
+		csv_list.push(first_element.concat(csv_L_map[area_name]));
+	}
+	var disclaimer = ["", ""].concat(dummy_values);
+	csv_list.push(disclaimer);
+	var disclaimer1 = ["", "Disclaimer: Please interpret with these results with caution - correlation, as this graph shows, is not the same as causation."].concat(dummy_values);
+	csv_list.push(disclaimer1);
+	var disclaimer2 = ["", "This tool visualizes patterns that can be used for exploratory analysis and hypothesis testing in order to form more complex "].concat(dummy_values);
+	csv_list.push(disclaimer2);
+	var disclaimer3 = ["", "and realistic models of cancer mortality, but should not alone be interpreted as a valid tool for prediction of cancer outcomes."].concat(dummy_values);
+	csv_list.push(disclaimer3);
+	return csv_list;
+}
+
+function create_csv_right_list(allValue2, dispValue1, rSquares) {
+	var csv_R_map = {};    // key: area-name, value: {dispValue1[area-name], allValue2[Cancer type].[area-name1], allValue2[Cancer type].[area-name2], 	
+	// Build index of cancer types
+	var idx = 0;
+	var dummy_values = [""];
+	var idx_acsdata_type = {};
+	var csv_title = ["SRA", "Region Name", dispValue1['selectedCase'].replace(' Cancer','')];
+				  // [SRA,Region Name,population,Bladder,Brain,Cervical, ... ,Stomach,Uterine]
+	for (var acsdata_type in allValue2) {
+		idx += 1;
+		dummy_values.push("");
+		idx_acsdata_type[acsdata_type] = idx;
+		csv_title.push(acsdata_type.replace('Total ','').replace(' /mi²',' / Km'));
+	}
+	// Build R square record
+	var csv_rSquare = ["R", "", ""];
+	csv_rSquare.concat(dummy_values.slice(0));
+	for (var acsdata_type in rSquares) {
+		var rSquare_value = rSquares[acsdata_type];
+		csv_rSquare[idx_acsdata_type[acsdata_type]+2] = rSquare_value;
+	}
+	// Load all ACSdata values to csv_R_map 
+	for (var acsdata_type in allValue2) {
+		var acsdata_value = allValue2[acsdata_type];
+		for (var area_name in acsdata_value) {
+			var area_value = acsdata_value[area_name]
+			if (!(area_name in csv_R_map)) {
+				csv_R_map[area_name] = dummy_values.slice(0);
+			}
+			var values = csv_R_map[area_name];
+			if (area_value != "Data not shown") values[idx_acsdata_type[acsdata_type]] = area_value;
+			csv_R_map[area_name] = values;
+		}
+	}
+	// Load a cancer values to csv_R_map 
+	for (var area_name in dispValue1) {
+		var cancer_value = dispValue1[area_name];
+		if (area_name == 'selectedCase') {
+			continue;
+		}
+		if (!(area_name in csv_R_map)) {
+			csv_R_map[area_name] = dummy_values.slice(0);
+		}
+		var values = csv_R_map[area_name];
+		if (cancer_value != "Data not shown") values[0] = cancer_value;
+		csv_R_map[area_name] = values;
+	}
+	// convert csv_R_map to csv_list
+	var csv_list = [csv_title, csv_rSquare];
+	for (var area_name in csv_R_map) {
+		var first_element = [SRA_Names[area_name], area_name];
+		//var values = csv_R_map[area_name];
+		csv_list.push(first_element.concat(csv_R_map[area_name]));
+	}
+	var disclaimer = ["", ""].concat(dummy_values);
+	csv_list.push(disclaimer);
+	var disclaimer1 = ["", "Disclaimer: Please interpret with these results with caution - correlation, as this graph shows, is not the same as causation."].concat(dummy_values);
+	csv_list.push(disclaimer1);
+	var disclaimer2 = ["", "This tool visualizes patterns that can be used for exploratory analysis and hypothesis testing in order to form more complex "].concat(dummy_values);
+	csv_list.push(disclaimer2);
+	var disclaimer3 = ["", "and realistic models of cancer mortality, but should not alone be interpreted as a valid tool for prediction of cancer outcomes."].concat(dummy_values);
+	csv_list.push(disclaimer3);
+	return csv_list;
+}
+
+function corrleationAnalysis(dispValue1, dispValue2, allValue1, allValue2, isAlert) {
+
+	var correlationValue = getCorrleationValue(dispValue1, dispValue2);
+	var result = correlationValue[0];
+	message = "<div style= 'LINE-HEIGHT:20px'></br></br></br></br></br><center > The Correlation (Pearson’s r) between </br><font size='4' color='blue'> ";
+	message += document.CaseSelect.case.value + " of ";
+	message += document.OutcomeSelect.outcome.value + " due to ";
+	message += document.ConditionSelect.condition.value;
+	if ( document.YearSelect1.year1.value == "Most Up-to-Date") {
+		message += ", Most Up-to-Date Available Data during 2010 to 2013";
+	}
+	else{
+		message += " in " + document.YearSelect1.year1.value;
+	}
+	message +=  "</font></br> &amp; </br> <font size='4' color='blue'> "
+	if ( document.NormalizationSelect.normalization.value == "none") {
+		message += document.layerSelect.ACSdata.value  + " in ";
+	} 
+	else if ( document.NormalizationSelect.normalization.value == "area") {
+		message += " The " + document.layerSelect.ACSdata.value + " (/mi²)";
+	} 	
+	else {
+		message +=  document.layerSelect.ACSdata.value + " (%)" ;
+		//message += document.layerSelect.ACSdata.value + " / " + document.NormalizationSelect.normalization.value + " in ";
+	}
+	if ( document.YearSelect2.year2.value == "Average"){
+		message += ", Average of 4 Years ";
+	}
+	else {
+		message += " in " + document.YearSelect2.year2.value;
+	}
+	message += "</font> is </br></br><font size='5' color='red'>   ";
+	message += result + " </font></br></br>  ";
+	message += "<div>  <font size='2' color='grey'> * The correlation is computed based on sampled subregoinaal areas (SRA) in the left map </font></div></center></div>" ;
+	message += "</br>" ;
+	ALERT_TITLE = "Correlation Analysis";
+	ALERT_BUTTON_TEXT = "Click to see more correlation results";
+	//message += "<div id='chart_div'>sdfsdfsdf</div>";
+	//alert("The correlation (Pearson’s r) between two selected layer is: " + result);
+	if (!isAlert) {
+
+		//message = "<div style= 'background-color:#357ebd;color:white;padding:5px;'><center ><font size='5'>Disclaimer!</font></center></div>  ";
+		//message += "</br></br>" ;
+		message = "</br></br></br></br><div class = 'scroll'></br>" ;
+	
+		message += "" ;	
+		message += 
+		
+		/*
+		"<div style = 'color:blue;font-weight: bold'> Please use Goolge Chrome or Firefox browser for best performance. Some functions are not currently supported on Interent Explorer. </div></br>" +		
+		*/
+		
+		"<div style = 'color:red;font-weight: bold'> Please use Goolge Chrome or Firefox browser for best performance. Some functions are not currently supported on Interent Explorer. </br></br></div>"+
+		
+		"<div> Please interpret with these results with caution - correlation, as this graph shows, is not the same as causation. This tool visualizes patterns that can be used for exploratory analysis and hypothesis testing in order to form more complex and realistic models of cancer mortality, but should not alone be interpreted as a valid tool for prediction of cancer outcomes.</div> </br>" +
+		
+		"<div>While the data have been tested for accuracy and are properly functioning, The San Diego Foundation, SDSU, and all the nonprofit organizations featured on this site (The Project Team) disclaims any responsibility for the accuracy or correctness of the data.</div></br>" +
+		
+		"<div>THE FOREGOING WARRANTY IS EXCLUSIVE AND IN LIEU OF ALL OTHER WARRANTIES OR MERCHANTABILITY, FITNESS FOR PARTICULAR PURPOSE AND/OR ANY OTHER TYPE WHETHER EXPRESSED OR IMPLIED.</div></br>" +
+		
+		"<div>In no event shall The Project Team become liable to users of these data, or any other party, for any loss or damages, consequential or otherwise, including but not limited to time, money, or goodwill, arising from the use, operation or modification of the data. </div></br>"+
+		
+		"<div>In using these data, users further agree to indemnify, defend, and hold harmless The Project Team for any and all liability of any nature arising out of or resulting from the lack of accuracy or correctness of the data, or the use of the data.</div></br>" +
+		
+		"<div>To assist The Project Team in the maintenance of the data, users should provide The Project Team, at the email address shown below, information concerning errors or discrepancies found in using the data.</div> </br>" +
+		
+		"<div style= 'color:blue';> E-mail: hdmasdsu@gmail.com </div>" +
+		
+		"<div style= 'color:blue';> Website: http://humandynamics.sdsu.edu</div></br>" +
+		
+		"<div style= 'color:black;>In using the data, users should be aware that these data are generalized and not parcel based, and were created for use in regional planning projects.</div></br>" +
+		
+		"<div style= 'color:black;>Please acknowledge The Project Team as a source when The Project Team data are used in the preparation of reports, papers, publications, maps, and other products.	</div></br>" +
+		
+		"</div>"	
+		//message += "<h2 style='color:blue;'>I am blue</h2>";
+		message += "</br>" ;
+		ALERT_TITLE = "Disclaimer";
+		//ALERT_TITLE = "<div style='background-color:red;color: black;'>Disclaimer</div>";
+		//ALERT_TITLE = "<h2 style='color:blue;'>I am blue</h2>";
+		ALERT_BUTTON_TEXT = "I understand & Proceed";
+
+	}
+	alert(message); //<a href="#chart_area">Box</a>
+	//document.getElementById('chart_description').scrollIntoview();
+	
+	//jump = "<a href='#chart_description'></a>"
+	//document.getElementById("chart_area").innerHTML = jump;
+	
+	
+	chart_L_title = "<div style= 'LINE-HEIGHT:20px;overflow:visible;'><center> The Correlation (Pearson’s r) between </br><font size='3' color='#008080'> ";
+	chart_L_title += document.CaseSelect.case.value + " of ";
+	chart_L_title += document.OutcomeSelect.outcome.value + " due to ";
+	chart_L_title += disease;
+
+	if ( document.YearSelect1.year1.value == "Most Up-to-Date") {
+		chart_L_title += ", Most Up-to-Date Available Data during 2010 to 2013";
+	}
+	else{
+		chart_L_title += " in " + document.YearSelect1.year1.value;
+	}
+	chart_L_title +=  "</font>&nbsp;&nbsp;&nbsp; &amp;  &nbsp;  <font size='3' color='#008080'> "	
+	//chart_L_title += document.YearSelect1.year1.value + "</font>&nbsp;&nbsp;&nbsp; &amp;  &nbsp;  <font size='3' color='#008080'> ";
+	if ( document.NormalizationSelect.normalization.value == "none") {
+		chart_L_title += document.layerSelect.ACSdata.value  ;
+	} 
+	else if ( document.NormalizationSelect.normalization.value == "area") {
+		chart_L_title += document.layerSelect.ACSdata.value + " (/km²)";
+	} 	
+	else {
+		chart_L_title += document.layerSelect.ACSdata.value + " (%)";
+	}
+	if ( document.YearSelect2.year2.value == "Average"){
+		chart_L_title += ", Average of 4 Years ";
+	}
+	else {
+		chart_L_title += " in " + document.YearSelect2.year2.value;
+	}	
+	//chart_L_title += document.YearSelect2.year2.value + " </font></center></div>  ";
+	document.getElementById("chart_left_title").innerHTML = chart_L_title;
+	
+	chart_description = "<font size='2'><ul>";
+	chart_description +=	"<li>County age-adjusted rates per 100,000 (2000 US standard population)</li>";
+	chart_description +=	"<li>Rates per 100,000 population</li>";
+	chart_description +=	"<li>Yellow bars represent the correlation that you have selected.</li>";
+	chart_description +=	"<li>The grey bars represent that the correlation result might not be reliable because the sample size is too small (fewer than 6).</li>";
+	chart_description +=	"<li>The number in the parentheses represents the sample size</li>";
+	chart_description +=	"<li>Pearson's r ranges from -1 to 1. </li>";
+	chart_description +=	"<li>The higher the absolute value of Pearson's r is, the stronger the correlation between two variables</li>";
+	chart_description +=	"<li>The chart on the right visualizes variables representing top ";
+
+	chart_description +=	MAX_COLUMN_OF_RIGHT_CHART;
+	chart_description +=	" correlations.</li></br>";
+	chart_description +=	"<p><font size='4'><font color='#0066ff'><button onclick='exportData_left(dispValue1, dispValue2, allValue1, allValue2)'>Export data to CSV file (left chart)</button></font></font></p>";
+	chart_description +=	"<p><font size='4'><font color='#FF3366'><button onclick='exportData_right(dispValue1, dispValue2, allValue1, allValue2)'>Export data to CSV file (right chart) </button></font></font></p>";	
+	chart_description +=	"</ul></font>";
+	
+	//yellow bars represent the one that you selected. </br> The Grey bars represent that the corrlation might not be reliable because the sample size is too small. </br> The number in the parenthesis represents the sample size  ";
+	document.getElementById("chart_description").innerHTML = chart_description;
+	//document.getElementById("chart_left_title").innerHTML = result;
+	draw_chart_left(allValue1, dispValue2);
+
+	chart_R_title = "<div style= 'LINE-HEIGHT:20px'><center > The Correlation (Pearson’s r) between </br><font size='3' color='#008080'> ";
+	chart_R_title += document.CaseSelect.case.value + " of ";
+	chart_R_title += document.OutcomeSelect.outcome.value + " due to ";
+	chart_R_title += document.ConditionSelect.condition.value ;
+	if ( document.YearSelect1.year1.value == "Most Up-to-Date") {
+		chart_R_title += ", Most Up-to-Date Available Data during 2010 to 2013";
+	}
+	else{
+		chart_R_title += " in " + document.YearSelect1.year1.value ;
+	}	
+	
+	chart_R_title +=  "</font>&nbsp;&nbsp;&nbsp;   &amp;    &nbsp; <font size='3' color='#008080'> ";
+	if ( document.NormalizationSelect.normalization.value == "none") {
+		chart_R_title += "Each Socioeconomic and Demographic Factors ";
+	}
+	else if ( document.NormalizationSelect.normalization.value == "area") {
+		chart_R_title += "Each Socioeconomic and Demographic Factors (/km²)";
+	}
+	else {
+		chart_R_title += "Each Socioeconomic and Demographic Factors (%)" ;
+	}
+	if ( document.YearSelect2.year2.value == "Average"){
+		chart_R_title += ", Average of 4 Years ";
+	}
+	else {
+		chart_R_title += " in " + document.YearSelect2.year2.value;
+	}
+	//csv_R_filename += document.YearSelect2.year2.value + ".csv";
+	document.getElementById("chart_right_title").innerHTML = chart_R_title;
+	//document.getElementById("chart_right_title").innerHTML = result;
+	//alert(dump(allValue2['Total population']));
+	draw_chart_right(dispValue1, allValue2);
+	
+	//return result;
+}	
+
+
+// make most up-to-date of 4 year (2010, 2011, 2012, 2013)
+// into the same array, CANCER, YEAR is 'most up-to-date'
+function makeUptodateCancerData_1() {
+	// key: CONDITION, OUTCOME, YEAR, SRANum 
+	// Is unique ?
+	var dict = {};
+	var dupString = "";
+	var dupCount = 0;
+	for (var i=1; i<CANCER.length; i++) {
+		var cols = CANCER[i];
+		var condition = cols[0];
+		var outcome   = cols[1];
+		var year      = cols[2];
+		var sraNum    = cols[4];
+		if (sraNum == '99') continue;
+		key = condition + '\t' + outcome + '\t' + sraNum + '\t' + year;
+		if (key in dict) {
+			dupCount += 1;
+			dupString += 'Duplicate key:  ' + key + '<br>';
+		} else {
+			dict[key] = cols; 
+		}
+	}
+	//alert('dupCount: '+dupCount);    // 1건 
+	//alert(dupString)    // Duplicate key: Thyroid Cancer	Hospitalization	37	2010
+	//alert('CANCER.length: '+CANCER.length);    // 13,525 - 1(header) = 13,524(data)
+	//alert('dict count: '+Object.keys(dict).length);    // 11,591
+	var keys = Object.keys(dict);
+	keys.sort();
+	
+	var pkey = 'first';
+	//var counts = [];
+	var values = [];
+	for (var i=0; i<keys.length; i++) {
+		var key = keys[i].substring(0, keys[i].length-4);
+		//alert('key='+key);
+		var cols      = dict[keys[i]];
+		var condition = cols[0];
+		var outcome   = cols[1];
+		var year      = cols[2];
+		var sraNum    = cols[4];
+		
+		if (pkey != key) {
+			if (pkey != 'first') {
+				// append to CANCER
+				//alert(dump(counts));
+				//for (var j=13; j<values.length; j++) {
+				//	if (counts[j] != 0) values[j] = values[j] * 1.0 / counts[j];
+				//}
+				//alert(dump(values));
+				CANCER.push(values);
+			}
+			pkey = key;
+			//counts = [];
+			//for (var j= 0; j<cols.length; j++) counts.push(0);
+			//alert(dump(counts));
+			values = cols.slice(0,13);
+			values[2] = 'Average';
+			for (var j=13; j<cols.length; j++) values.push(0.0);
+			//alert(dump(values));
+		}
+		
+		for (var j=13; j<cols.length; j++) {
+			if (cols[j] != "" && parseFloat(cols[j]) != 0) {
+				//counts[j] += 1;
+				values[j] == parseFloat(cols[j]);
+			}
+		}
+	}
+	if (pkey != 'first') {
+		// append to CANCER
+		//alert(dump(counts));
+		//for (var j=13; j<values.length; j++) {
+		//	if (counts[j] != 0) values[j] = values[j] * 1.0 / counts[j];
+		//}
+		//alert(dump(values));
+		CANCER.push(values);
+	}
+	//alert('CANCER.length: '+CANCER.length);    // 13,525 - 1(header) = 13,524(data)   16,423 - 1 = 16,422
+}
+
+
+// make most up-to-date of 4 year (2010, 2011, 2012, 2013)
+function makeUptodateCancerData() {
+	// key: CONDITION, OUTCOME, YEAR, SRANum 
+	// Is unique ?
+	var dict = {};
+	var dupString = "";
+	var dupCount = 0;
+	for (var i=1; i<CANCER.length; i++) {
+		var cols = CANCER[i];
+		var condition = cols[0];
+		var outcome   = cols[1];
+		var year      = cols[2];
+		var sraNum    = cols[4];
+		if (year != "2010" && year != "2011" && year != "2012" && year != "2013") continue;
+		if (sraNum == '99') continue;
+		key = condition + '\t' + outcome + '\t' + sraNum + '\t' + year;
+		if (key in dict) {
+			dupCount += 1;
+			dupString += 'Duplicate key:  ' + key + '<br>';
+		} else {
+			dict[key] = cols; 
+		}
+	}
+	//alert('dupCount: '+dupCount);    // 1건 
+	//alert(dupString)    // Duplicate key: Thyroid Cancer	Hospitalization	37	2010
+	//alert('CANCER.length: '+CANCER.length);    // 13,525 - 1(header) = 13,524(data)
+	//alert('dict count: '+Object.keys(dict).length);    // 11,591
+	var keys = Object.keys(dict);
+	keys.sort();
+	
+	var pkey = 'first';
+	var values = [];
+	for (var i=0; i<keys.length; i++) {
+		var key = keys[i].substring(0, keys[i].length-4);
+		//alert('key='+key);
+		var cols      = dict[keys[i]];
+		var condition = cols[0];
+		var outcome   = cols[1];
+		var year      = cols[2];
+		var sraNum    = cols[4];
+		
+		if (pkey != key) {
+			if (pkey != 'first') {
+				// append to CANCER
+				CANCER.push(values);
+			}
+			pkey = key;
+			values = cols.slice(0,13);
+			values[2] = 'Most Up-to-Date';
+			for (var j=13; j<cols.length; j++) values.push(0.0);
+			//alert(dump(values));
+		}
+		
+		for (var j=13; j<cols.length; j++) {
+			if (cols[j] != "" && parseFloat(cols[j]) != 0) {
+				values[j] = parseFloat(cols[j]);
+			}
+		}
+	}
+	if (pkey != 'first') {
+		// append to CANCER
+		CANCER.push(values);
+	}
+	//alert('CANCER.length: '+CANCER.length);    // 13,525 - 1(header) = 13,524(data)   16,423 - 1 = 16,422
+}
+
+
+// make Average of 4 year (2010, 2011, 2012, 2013)
+function makeAverageCancerData() {
+	// key: CONDITION, OUTCOME, YEAR, SRANum 
+	// Is unique ?
+	var dict = {};
+	var dupString = "";
+	var dupCount = 0;
+	for (var i=1; i<CANCER.length; i++) {
+		var cols = CANCER[i];
+		var condition = cols[0];
+		var outcome   = cols[1];
+		var year      = cols[2];
+		var sraNum    = cols[4];
+		if (year != "2010" && year != "2011" && year != "2012" && year != "2013") continue;
+		if (sraNum == '99') continue;
+		key = condition + '\t' + outcome + '\t' + sraNum + '\t' + year;
+		if (key in dict) {
+			dupCount += 1;
+			dupString += 'Duplicate key:  ' + key + '<br>';
+		} else {
+			dict[key] = cols; 
+		}
+	}
+	//alert('dupCount: '+dupCount);    // 1건 
+	//alert(dupString)    // Duplicate key: Thyroid Cancer	Hospitalization	37	2010
+	//alert('CANCER.length: '+CANCER.length);    // 13,525 - 1(header) = 13,524(data)
+	//alert('dict count: '+Object.keys(dict).length);    // 11,591
+	var keys = Object.keys(dict);
+	keys.sort();
+	
+	var pkey = 'first';
+	var counts = [];
+	var values = [];
+	for (var i=0; i<keys.length; i++) {
+		var key = keys[i].substring(0, keys[i].length-4);
+		//alert('key='+key);
+		var cols      = dict[keys[i]];
+		var condition = cols[0];
+		var outcome   = cols[1];
+		var year      = cols[2];
+		var sraNum    = cols[4];
+		
+		if (pkey != key) {
+			if (pkey != 'first') {
+				// append to CANCER
+				//alert(dump(counts));
+				for (var j=13; j<values.length; j++) {
+					if (counts[j] != 0) values[j] = values[j] * 1.0 / counts[j];
+				}
+				//alert(dump(values));
+				CANCER.push(values);
+			}
+			pkey = key;
+			counts = [];
+			for (var j= 0; j<cols.length; j++) counts.push(0);
+			//alert(dump(counts));
+			values = cols.slice(0,13);
+			values[2] = 'Average';
+			for (var j=13; j<cols.length; j++) values.push(0.0);
+			//alert(dump(values));
+		}
+		
+		for (var j=13; j<cols.length; j++) {
+			if (cols[j] != "" && parseFloat(cols[j]) != 0) {
+				counts[j] += 1;
+				values[j] += parseFloat(cols[j]);
+			}
+		}
+	}
+	if (pkey != 'first') {
+		// append to CANCER
+		//alert(dump(counts));
+		for (var j=13; j<values.length; j++) {
+			if (counts[j] != 0) values[j] = values[j] * 1.0 / counts[j];
+		}
+		//alert(dump(values));
+		CANCER.push(values);
+	}
+	//alert('CANCER.length: '+CANCER.length);    // 13,525 - 1(header) = 13,524(data)   16,423 - 1 = 16,422
+}
+
+
+
+// make average census data of 4 year (2010, 2011, 2012, 2013) -> CENSUSaverage
+function makeAverageCensusData() {
+	CENSUSaverage = [];
+	CENSUSaverage.push(CENSUS2013[0]);    // insert heading using CENSUS2013
+	var totDict = {};    // key SRANum, value: cols
+	var cntDict = {};    // key SRANum, value: cols
+	
+	accumulateCENSUSdata(totDict, cntDict, CENSUS2010, "2010");
+	accumulateCENSUSdata(totDict, cntDict, CENSUS2011, "2011");
+	accumulateCENSUSdata(totDict, cntDict, CENSUS2012, "2012");
+	accumulateCENSUSdata(totDict, cntDict, CENSUS2013, "2013");
+	//alert(dump(cntDict["1"]));
+	//alert(dump(totDict["1"]));
+
+	var keys = Object.keys(totDict);
+	keys.sort();
+
+	var counts = [];
+	var values = [];
+	for (var i=0; i<keys.length; i++) {
+		var key = keys[i];
+		var values = totDict[key];
+		var counts = cntDict[key];
+		for (var j= 5; j<values.length-1; j++) {
+			if (counts[j] != 0) values[j] = values[j] * 1.0 / counts[j];
+			values[j] = values[j].toString();    // type change float to string 
+		}
+		//alert(dump(values));
+		CENSUSaverage.push(values);
+	}
+	//alert(CENSUSaverage.length);
+	//alert(dump(CENSUSaverage[2]));
+}
+
+// accumulate value and count to totDict, cntDict using CENSUS2010, CENSUS2011, CENSUS2012, CENSUS2013
+function accumulateCENSUSdata(totDict, cntDict, census, year) {
+	// get index of CENSUS_HEADER_DESCRIPTIONS
+	var index = []
+	for (var j=0; j<census[0].length; j++) index.push(-1);
+	for (var i=0; i<census[0].length; i++) {
+		for (var j=0; j<HEADER_DESCRIPTIONS[year].length; j++) {
+			if (census[0][i] == HEADER_DESCRIPTIONS[year][j]) {
+				index[i] = j + 5;
+				break;
+			}
+		}
+	}
+	//alert(dump(index));
+	
+	// accumulate value and count to totDict, cntDict
+	for (var i=1; i<census.length; i++) {
+		var cols   = census[i];
+		var sraNum = cols[2];
+		var values = []
+		var counts = []
+		if (sraNum in totDict) {
+			values = totDict[sraNum]
+			counts = cntDict[sraNum]
+		} else {
+			for (var j= 0; j<CENSUSaverage[0].length; j++) counts.push(0);
+			values = cols.slice(0,5);
+			values[0] = 'Average';
+			for (var j=5; j<CENSUSaverage[0].length; j++) values.push(0.0);
+			values[values.length-1] = cols[cols.length-1];    // area value
+			//alert(dump(values));
+		}
+		for (var j=5; j<cols.length; j++) {
+			var idx = index[j];
+			if (idx != -1 && cols[idx] != "" && parseFloat(cols[idx]) != 0) {
+				counts[idx] += 1;
+				values[idx] += parseFloat(cols[idx]);
+			}
+		}
+		//alert(dump(values));
+		totDict[sraNum] = values;
+		cntDict[sraNum] = counts;
+	}
+	//alert(dump(cntDict["1"]));
+	//alert(dump(totDict["1"]));
+}
+
+// Build Cancer types using CANCER and delete some type by NO_SHOWNS
+function getNewCANCERs(Right_SDFgroup, Right_SDFdetail) {
+	//alert("Right_SDFgroup="+Right_SDFgroup+"  Right_SDFdetail="+Right_SDFdetail);
+	//Right_SDFgroup = "Gender";
+	//Right_SDFdetail = "Male Population";
+	var newCancers = {};            // key: cancer type,  value: it's cases -> array
+	// Build newCancers 
+	for (var i=1; i<CANCER.length; i++) {          // CANCER[0] skipped, because it's a heading.
+		var cancerType = CANCER[i][0];
+		if (cancerType == "CONDITION") continue;            // skip, if it's heading.
+		if (!(cancerType in newCancers)) newCancers[cancerType] = CANCER[0].slice(13);
+	}
+	//alert(dump(newCancers["Uterine Cancer"]));
+	
+	for (var idx in NO_SHOWNS)
+	{
+		var no_shown            = NO_SHOWNS[idx];
+		var Left_Map_Type       =  no_shown[0];
+		var Left_Map_Case       =  no_shown[1];
+		var Right_Map_SDFgroup  =  no_shown[2];
+		var Right_Map_SDFdetail =  no_shown[3];
+		if (Right_Map_SDFgroup  != "*" && Right_SDFgroup  != Right_Map_SDFgroup)  continue;
+		if (Right_Map_SDFdetail != "*" && Right_SDFdetail != Right_Map_SDFdetail) continue;
+		//alert(dump(no_shown));
+		
+		for (var cancerType in newCancers) {
+			if (Left_Map_Type != "*" && cancerType != Left_Map_Type) continue;
+			var cancerCases = newCancers[cancerType];
+			for (var j=cancerCases.length-1; j>=0; j--) {
+				var cancerCase = cancerCases[j];
+				if (Left_Map_Case != "*" && cancerCase != Left_Map_Case) continue;
+				newCancers[cancerType].splice(j,1);
+			}
+			if (newCancers[cancerType].length == 0) {      // delete cancer type, if it's all cases are deleted
+				//alert("newCancers["+cancerType+"].length == 0 ");
+				delete newCancers[cancerType];
+			}
+		}
+	}	
+	//alert(dump(newCancers["Female Breast Cancer"]));
+	//alert(dump(Object.keys(newCancers)));
+	return newCancers;
+}
+
+// var CANCER_TYPES = getCANCERcases(document.layerSelect0.ACSdata0.value, document.layerSelect.ACSdata.value);
+// Build Cancer cases using CANCER[0] and delete some type by NO_SHOWNS
+function getCANCERcases_OLD(Right_SDFgroup, Right_SDFdetail) {
+	
+	var newCases = CANCER[0].slice(13);
+	//alert(dump(newCases));
+	
+	// Delete no shown SSDFs from newCases
+	for (var idx in NO_SHOWNS)
+	{
+		var no_shown            = NO_SHOWNS[idx];
+		var Left_Map_Type       =  no_shown[0];
+		var Left_Map_Case       =  no_shown[1];
+		var Right_Map_SDFgroup  =  no_shown[2];
+		var Right_Map_SDFdetail =  no_shown[3];
+		if (Right_Map_SDFgroup  != "*" && Right_SDFgroup  != Right_Map_SDFgroup) continue;
+		if (Right_Map_SDFdetail != "*" && Right_SDFdetail != Right_Map_SDFdetail) continue;
+		//alert(dump(no_shown));
+		
+		for (var j=newCases-1; j>=0; j--) {
+			var newCase = newCases[j];
+			if (Left_Map_Case != "*" && newCase != Left_Map_Case) continue;
+			newCases.splice(j,1);
+		}
+	}
+	alert(dump(newCases));
+	return newCases;
+}
+
+// Match SDFdetail only, because all SDFdetails are unique. 
+function isRemoveLayer(SDFdetail, mustRemoveSDFs) {
+	//alert(mustRemoveSDFs);
+	for (var j=0; j<mustRemoveSDFs.length; j++) {
+		if (SDFdetail == mustRemoveSDFs[j][1]) return true;    
+	}
+	return false;
+}
+
+/* delete some economic factor layer from CATEGORY_DESCRIPTIONS
+function deleteSomeEconomicFactorsfromDESCRIPTIONS_old() {
+	for (var year in CATEGORY_DESCRIPTIONS) {
+		var groups = CATEGORY_DESCRIPTIONS[year];
+		var newEconomicFactors = [];
+		for (var j=0; j<groups["Economic Factor"].length; j++) {
+			if (!isRemoveLayer(groups["Economic Factor"][j], NEED_REMOVE_ACSdata)) 
+				newEconomicFactors.push(groups["Economic Factor"][j]);
+		}
+		groups["Economic Factor"] = newEconomicFactors;
+	}
+} */
+
+// delete some Socio-economic and Demographic Factors from CATEGORY_DESCRIPTIONS
+//  1. Deep copy from CATEGORY_DESCRIPTIONS_MASTER to newSDFs
+//  2. Delete no shown SDFs from newSDFs
+//  3. Return newSDFs
+function getNewSDFs(left_type, left_case) {
+	//left_type = "Female Breast Cancer";
+	//  1. Deep copy from CATEGORY_DESCRIPTIONS_MASTER to newSDFs
+	var newSDFs = {};
+	for (var year in CATEGORY_DESCRIPTIONS_MASTER) {
+		newSDFs[year] = {};
+		for (var group in CATEGORY_DESCRIPTIONS_MASTER[year]) {
+			newSDFs[year][group] = [];
+			for (var j=0; j<CATEGORY_DESCRIPTIONS_MASTER[year][group].length; j++) {
+				newSDFs[year][group].push(CATEGORY_DESCRIPTIONS_MASTER[year][group][j]);
+			}
+		}
+	}
+	
+	//  2. Delete no shown SSDFs from newSDFs
+	for (var idx in NO_SHOWNS)
+	{
+		var no_shown         = NO_SHOWNS[idx];
+		var Left_Map_Type    =  no_shown[0];
+		var Left_Map_Case    =  no_shown[1];
+		var Right_Map_SDF    =  no_shown[2];
+		var Right_Map_Select =  no_shown[3];
+		if (Left_Map_Type != "*" && left_type != Left_Map_Type) continue;
+		if (Left_Map_Case != "*" && left_case != Left_Map_Case) continue;
+		//alert(dump(no_shown));
+		for (var year in newSDFs) {
+			for (var group in newSDFs[year]) {
+				if (Right_Map_SDF != "*" && group != Right_Map_SDF) continue;
+				var msg = '';
+				for (var j=newSDFs[year][group].length-1; j>=0; j--) {				
+					if (Right_Map_Select != "*" && newSDFs[year][group][j] != Right_Map_Select) continue;
+						msg += "newSDFs["+year+"]["+group+"]["+j+"]=" +  newSDFs[year][group][j] + "  ";
+						//alert(newSDFs[year][group] + "  " + newSDFs[year][group][j]);
+						newSDFs[year][group].splice(j,1);
+						//delete newSDFs[year][group][j];
+				}
+				//alert(msg);
+				if (newSDFs[year][group].length == 0) {
+					//alert("newSDFs["+year+"]["+group+"].length == 0 ");
+					delete newSDFs[year][group];
+				}
+			}
+		}
+	}
+
+	return newSDFs;
+	//CATEGORY_DESCRIPTIONS = newSDFs;
+	//alert(dump(newSDFs[2013]["Economic Factor"]));
+}
+
+// get SDF groups from CATEGORY_DESCRIPTION by year
+function getSDFgroups(year) {
+	var groups = [];
+	for (var group in CATEGORY_DESCRIPTIONS[year]) {
+		if (group.length != 0) groups.push(group);
+	}
+	//groups.sort();
+	return groups;
+}
+
+// get CENSUSdata from CENSUS2010, CENSUS2011, CENSUS2012, CENSUS2013, CENSUSaverage and
+// select columns of Socio-economic and Demographic Factors from CATEGORY_DESCRIPTIONS
+function getCENSUSdata(year) {
+	var newCENSUS = [];
+	//var categoryDescriptions = CATEGORY_DESCRIPTIONS[year];
+	var thisCENSUS;
+	if (year == "2010")  thisCENSUS = CENSUS2010;
+	if (year == "2011")  thisCENSUS = CENSUS2011;
+	if (year == "2012")  thisCENSUS = CENSUS2012;
+	if (year == "2013")  thisCENSUS = CENSUS2013;
+	if (year == "Average")  thisCENSUS = CENSUSaverage;
+	
+	var heading = thisCENSUS[0].slice(0);
+	var mask = [true, true, true, true, true];
+	for (var i=5; i<heading.length; i++) {
+		mask[i] = false;
+		if (heading[i] == "Total Population" || heading[i] == "area") {
+			mask[i] = true;
+			continue;
+		}
+		for (var group in CATEGORY_DESCRIPTIONS[year]) {
+			for (var j=0; j<CATEGORY_DESCRIPTIONS[year][group].length; j++) {
+				if (heading[i] == CATEGORY_DESCRIPTIONS[year][group][j]) {
+					mask[i] = true;
+					break;
+				}
+			}
+			if (mask[i] == true) break;
+		}
+	}
+	for (var i=5; i<mask.length; i++) if (!mask[i]) heading[i] = "-";
+	//alert(dump(heading));    // 101
+	
+	for (var i=0; i<thisCENSUS.length; i++) {
+		var aRecord = [];
+		for (var j=0; j<thisCENSUS[i].length; j++) if (mask[j]) aRecord.push(thisCENSUS[i][j]);
+		newCENSUS.push(aRecord);
+	}
+	//alert(dump(newCENSUS[1]));    // 98
+	return newCENSUS;
+}
+
+// SDFs -> Socio-economic and Demographic Factors
+// Delete this SDFs from CENSUS2010, CENSUS2011, CENSUS2012, CENSUS2013, CENSUSaverage at very first time once.
+// Match SDFdetail only, because all SDFdetails are unique. 
+function deleteSomeEconomicFactorsfromCENSUS() {
+	var years_array  = ["2010", "2011", "2012", "2013", "Average"];
+	var CENSUS_array = [CENSUS2010, CENSUS2011, CENSUS2012, CENSUS2013, CENSUSaverage];
+
+	for (var i=0; i<years_array.length; i++) {
+		var year = years_array[i];
+		var CENSUS = CENSUS_array[i];
+		var newCensus = [];
+		//alert("  w="+CENSUS2013[0].length+"  h="+CENSUS2013.length);
+		var censusHeader = CENSUS[0].slice(0);                                 // deep copy
+		for (var j=0; j<CENSUS.length; j++) {
+			var censusRow = CENSUS[j];
+			var newCols = [];
+			for (var k=0; k<censusHeader.length; k++) {
+				if (!isRemoveLayer(censusHeader[k], MUST_REMOVE_SDFs)) newCols.push(censusRow[k]);
+			}
+			newCensus.push(newCols);
+		}
+		//CENSUS_array[i] = newCensus;
+		if (i == 0) CENSUS2010 = newCensus;
+		if (i == 1) CENSUS2011 = newCensus;
+		if (i == 2) CENSUS2012 = newCensus;
+		if (i == 3) CENSUS2013 = newCensus;
+		if (i == 4) CENSUSaverage = newCensus;
+	}
+	//alert(dump(CENSUS2013[0]));
+}
+
+// Delete this SDFs from CATEGORY_DESCRIPTIONS_MASTER
+// Match SDFgroup and SDFdetail both.
+function deleteSomeEconomicFactorsfromCATEGORY() {
+	for (var i=0; i<MUST_REMOVE_SDFs.length; i++) {
+		for (var year in CATEGORY_DESCRIPTIONS_MASTER) {
+			var group = MUST_REMOVE_SDFs[i][0];
+			if (!(group in CATEGORY_DESCRIPTIONS_MASTER[year])) {
+				alert("SDFgroup '" + group + "' is not in the CATEGORY_DESCRIPTIONS_MASTER.");
+				continue;
+			}
+			for (var j=CATEGORY_DESCRIPTIONS_MASTER[year][group].length-1; j>=0; j--) {	
+				if (CATEGORY_DESCRIPTIONS_MASTER[year][group][j] != MUST_REMOVE_SDFs[i][1]) continue;
+				CATEGORY_DESCRIPTIONS_MASTER[year][group].splice(j,1);
+				break;	
+			}
+		}
+	}
+	//alert(dump(CATEGORY_DESCRIPTIONS_MASTER["2013"]["Economic Factor"]));
+}
+
+// change header abbreviations of 4 years data to full name by HEADER_DESCRIPTIONS
+// it will be change only one time at very beginning		
+function changeHeaderFromAbbreviationToFullname() {
+
+	for (var year in CATEGORY_DESCRIPTIONS_MASTER) {
+		//delete CATEGORY_DESCRIPTIONS_MASTER[year]["Race"];
+		for (var category in CATEGORY_DESCRIPTIONS_MASTER[year]) {
+			var group = CATEGORY_DESCRIPTIONS_MASTER[year][category];
+			for (var i=0; i<group.length; i++) {
+				// HEADER_DESCRIPTIONS[year].length -> Uncaught TypeError: Cannot read property 'length' of undefined
+				for (var j=0; j<HEADER_DESCRIPTIONS["Definition"].length; j++) {
+					if (group[i] == HEADER_DESCRIPTIONS["2010"][j] ||
+						group[i] == HEADER_DESCRIPTIONS["2011"][j] ||
+						group[i] == HEADER_DESCRIPTIONS["2012"][j] ||
+						group[i] == HEADER_DESCRIPTIONS["2013"][j]) {
+						group[i] = HEADER_DESCRIPTIONS['Definition'][j].substring(0,100);
+						break;
+					}
+				}
+			}
+		}
+	}
+	//alert(dump(CATEGORY_DESCRIPTIONS_MASTER));
+	for (var i=0; i<CENSUS2010[0].length; i++) {
+		for (var j=0; j<HEADER_DESCRIPTIONS["2010"].length; j++) {
+			if (CENSUS2010[0][i] == HEADER_DESCRIPTIONS["2010"][j]) {
+				CENSUS2010[0][i] = HEADER_DESCRIPTIONS['Definition'][j].substring(0,100);
+				//CENSUS2010[0][i] = HEADER_DESCRIPTIONS['Definition'][j];
+				break;
+			}
+		}
+	}
+	for (var i=0; i<CENSUS2011[0].length; i++) {
+		for (var j=0; j<HEADER_DESCRIPTIONS["2011"].length; j++) {
+			if (CENSUS2011[0][i] == HEADER_DESCRIPTIONS["2011"][j]) {
+				CENSUS2011[0][i] = HEADER_DESCRIPTIONS['Definition'][j].substring(0,100);
+				//CENSUS2011[0][i] = HEADER_DESCRIPTIONS['Definition'][j]
+				break;
+			}
+		}
+	}
+	for (var i=0; i<CENSUS2012[0].length; i++) {
+		for (var j=0; j<HEADER_DESCRIPTIONS["2012"].length; j++) {
+			if (CENSUS2012[0][i] == HEADER_DESCRIPTIONS["2012"][j]) {
+				CENSUS2012[0][i] = HEADER_DESCRIPTIONS['Definition'][j].substring(0,100);
+				//CENSUS2012[0][i] = HEADER_DESCRIPTIONS['Definition'][j];
+				break;
+			}
+		}
+	}
+	for (var i=0; i<CENSUS2013[0].length; i++) {
+		for (var j=0; j<HEADER_DESCRIPTIONS["2013"].length; j++) {
+			if (CENSUS2013[0][i] == HEADER_DESCRIPTIONS["2013"][j]) {
+				CENSUS2013[0][i] = HEADER_DESCRIPTIONS['Definition'][j].substring(0,100);
+				//CENSUS2013[0][i] = HEADER_DESCRIPTIONS['Definition'][j]
+				break;
+			}
+		}
+	}
+	for (var i=0; i<CENSUSaverage[0].length; i++) {
+		for (var j=0; j<HEADER_DESCRIPTIONS["2013"].length; j++) {
+			if (CENSUSaverage[0][i] == HEADER_DESCRIPTIONS["2013"][j]) {
+				CENSUSaverage[0][i] = HEADER_DESCRIPTIONS['Definition'][j].substring(0,100);
+				//CENSUSaverage[0][i] = HEADER_DESCRIPTIONS['Definition'][j]
+				break;
+			}
+		}
+	}
+	//alert(dump(CENSUSaverage[2]));
+}
+
+function changeHeaderFromAbbreviationToFullname_save() {
+	for (var i=0; i<CENSUS2010[0].length; i++) {
+		for (var j=0; j<HEADER_DESCRIPTIONS["2010"].length; j++) {
+			if (CENSUS2010[0][i] == HEADER_DESCRIPTIONS["2010"][j]) {
+				CENSUS2010[0][i] = HEADER_DESCRIPTIONS['Definition'][j].substring(0,100);
+				//CENSUS2010[0][i] = HEADER_DESCRIPTIONS['Definition'][j];
+				break;
+			}
+		}
+	}
+	for (var i=0; i<CENSUS2011[0].length; i++) {
+		for (var j=0; j<HEADER_DESCRIPTIONS["2011"].length; j++) {
+			if (CENSUS2011[0][i] == HEADER_DESCRIPTIONS["2011"][j]) {
+				CENSUS2011[0][i] = HEADER_DESCRIPTIONS['Definition'][j].substring(0,100);
+				//CENSUS2011[0][i] = HEADER_DESCRIPTIONS['Definition'][j]
+				break;
+			}
+		}
+	}
+	for (var i=0; i<CENSUS2012[0].length; i++) {
+		for (var j=0; j<HEADER_DESCRIPTIONS["2012"].length; j++) {
+			if (CENSUS2012[0][i] == HEADER_DESCRIPTIONS["2012"][j]) {
+				CENSUS2012[0][i] = HEADER_DESCRIPTIONS['Definition'][j].substring(0,100);
+				//CENSUS2012[0][i] = HEADER_DESCRIPTIONS['Definition'][j];
+				break;
+			}
+		}
+	}
+	for (var i=0; i<CENSUS2013[0].length; i++) {
+		for (var j=0; j<HEADER_DESCRIPTIONS["2013"].length; j++) {
+			if (CENSUS2013[0][i] == HEADER_DESCRIPTIONS["2013"][j]) {
+				CENSUS2013[0][i] = HEADER_DESCRIPTIONS['Definition'][j].substring(0,100);
+				//CENSUS2013[0][i] = HEADER_DESCRIPTIONS['Definition'][j]
+				break;
+			}
+		}
+	}
+	for (var i=0; i<CENSUSaverage[0].length; i++) {
+		for (var j=0; j<HEADER_DESCRIPTIONS["2013"].length; j++) {
+			if (CENSUSaverage[0][i] == HEADER_DESCRIPTIONS["2013"][j]) {
+				CENSUSaverage[0][i] = HEADER_DESCRIPTIONS['Definition'][j].substring(0,100);
+				//CENSUSaverage[0][i] = HEADER_DESCRIPTIONS['Definition'][j]
+				break;
+			}
+		}
+	}
+	//alert(dump(CENSUSaverage[2]));
+}
+
+/* Set or reset Option disabled Property
+// ACSdata_SDFgroup.options[3] is Age
+function disableAgeOption(disableAge) {
+	//var element = document.getElementById("ACSdata_SDFgroup").options[3];
+	var options = document.getElementById("ACSdata_SDFgroup").options;
+	for (var i=0; i<options.length; i++) {
+		var option = options[i]; 
+		if (option.value == "Age") {
+			if (disableAge == false) {
+				
+			}
+			if (disableAge == true) {
+				options.remove(i);
+				break;
+			}
+			// if Age is selected
+			if (disableAge == false) element.disabled = false;
+			if (disableAge == true) {
+				element.disabled = true;
+				if (option.selected == true) {
+					options[3].selected == false;
+					options[1].selected == true;
+					alert(1);
+				}
+			} //
+		}
+	}
+} */
+
+// Set option tag to target	
+// header: column name of each *.js file. must be first row of array
+// startIDX: start index in header. data start position
+// target: id of select tag
+// selected: default selected item if any. if not, first item will be selected
+function setSelectField(header, startIDX, target, selected) {
+		//alert(dump(header));
+		options = ""
+		if (header) {
+			for (var i=startIDX; i<header.length; i++) {
+				if (header[i] == "Total Population") continue;
+				if (header[i] == "area") continue;
+				if (selected && header[i] == selected) {
+					options += '<option value="' + header[i] + '" selected>' + header[i] + '</option>';
+				} else {
+					options += '<option value="' + header[i] + '">' + header[i] + '</option>';
+				}
+			}
+		} else {
+			options = '<option value="Data not shown">' + '<===== Category not found. Please select another one. =====>' + '</option>';
+		}
+		document.getElementById(target).innerHTML = options;
+}
+
+function getColumnIndex(header, columnName) {
+	for (var i=0; i<header.length; i++) {
+		if (header[i] == columnName) return i;
+	}
+	//alert("Column name['" + columnName + "'] not found in the header.");
+	return -1;
+}
+function getColumnIndex1(header, columnName) {
+	//alert(dump(header));
+	for (var i=0; i<header.length; i++) {
+		if (header[i] == columnName) return i;
+	}
+	alert("Column name[" + columnName + "]"+columnName.length+" not found in the header. [" + header[59] + "]"+header[59].length);
+	return -1;
+}
+		
+function remove1() {
+	if (geojson1 != null) map1.removeLayer(geojson1);
+	if (info1    != null) info1.removeFrom(map1);
+	if (legend1  != null) legend1.removeFrom(map1);	
+}
+
+function remove2() {
+	if (geojson2 != null) map2.removeLayer(geojson2);
+	if (info2    != null) info2.removeFrom(map2);
+	if (legend2  != null) legend2.removeFrom(map2);	
+}
+/*
+		function styleRemove(feature) {
+			return {
+				//weight: 2,
+				opacity: 0,
+				color: 'white',
+				//dashArray: '3',
+				fillOpacity: 0,
+				fillColor: 'white'
+			};
+		}
+*/		
+
+function layerChange1(direction) {
+
+	var selectedCondition  = document.ConditionSelect.condition.value;
+	var selectedOutcom     = document.OutcomeSelect.outcome.value;
+	var selectedCase       = document.CaseSelect.case.value;
+	var selectedYear       = document.YearSelect1.year1.value;
+	var classification     = document.classSelect1.classified.value;
+	var selectedColorNum   = document.colorNumSelect1.colorNum.value;
+	var selectedClassNum   = document.classNumSelect1.classNum.value;
+	var classCount         = selectedClassNum * 1;
+	var colorList          = COLOR_CLASS[selectedColorNum+selectedClassNum];
+	//alert("selectedCondition: " + selectedCondition);
+	//alert("selectedOutcom: " + selectedOutcom);
+	//alert("selectedCase: " + selectedCase);
+	//alert("selectedYear: " + selectedYear);
+	//alert("classification: " + classification);
+	//alert("Color+Class: " + selectedColorNum+selectedClassNum);
+	//alert(dump(COLOR_CLASS[selectedColorNum+selectedClassNum]));
+	
+	
+	// if the 'Case' changed in left-side, we must reset the 'ACSdata0_options0' and the 'ACSdata_options' in right-side
+	// and re-draw the right-side
+	if (!direction || direction != "uni-direction") {
+		// Reset Socio-economic and Demographic Factors (SDF) using Left_Map_Type and Left_Map_Case.
+		var bcSDFgroup = document.layerSelect0.ACSdata0.value;           // before change SDFgroup value
+		var bcSDFdetail = document.layerSelect.ACSdata.value;            // before change SDFdetail value
+	
+		CATEGORY_DESCRIPTIONS = getNewSDFs(document.ConditionSelect.condition.value, document.CaseSelect.case.value);
+		setSelectField(getSDFgroups(document.YearSelect2.year2.value), 0, "ACSdata_SDFgroup", bcSDFgroup);
+		var acSDFgroup = document.layerSelect0.ACSdata0.value;           // after change SDFgroup value
+	
+		CENSUS = getCENSUSdata(document.YearSelect2.year2.value);    // CENSUS is a global variable
+		setSelectField(CATEGORY_DESCRIPTIONS[document.YearSelect2.year2.value][document.layerSelect0.ACSdata0.value], 0, "ACSdata_options", bcSDFdetail);
+		layerChange2("uni-direction");
+	}
+		
+	var iCondition = getColumnIndex(CANCER[0], "CONDITION")
+	var iOutcom    = getColumnIndex(CANCER[0], "OUTCOME")
+	var iYEAR      = getColumnIndex(CANCER[0], "YEAR")
+	var iGeography = getColumnIndex(CANCER[0], "Geography")
+	var iSRANum    = getColumnIndex(CANCER[0], "SRANum")
+	var iCase      = getColumnIndex(CANCER[0], selectedCase)
+	
+	// Build all geometry for Add the Null Data Polygons shade with grey
+	features = []
+	allValue1 = {}    // save all cancer type for the correlations
+	dispValue1 = {}
+	dispValue1['selectedCase'] = selectedCase;    // save for tool tip of right map
+	for (var j=0; j<CA.features.length; j++){
+		geometry = CA.features[j].geometry;
+		var cols = CANCER[i];
+		property = {}
+		property["NAME"] = CA.features[j].properties.SRA_Name;
+		property[selectedCase] = "Data not shown";
+		features.push({"type": "Feature", "geometry": geometry, "properties": property});
+		//features.push({"type": "Feature", "properties": property});
+		dispValue1[CA.features[j].properties.SRA_Name] = "Data not shown";
+	}
+	var copyValue1 = JSON.parse(JSON.stringify(dispValue1));
+	delete copyValue1['selectedCase'];    // no need for save all cancer type data
+	//alert(dump(features));
+	
+	// Build cancer data here.
+	for (var i=1; i<CANCER.length; i++) {	
+		var cols = CANCER[i];
+		//alert(dump(cols));
+		//alert("CONDITION: "+cols[iCondition]);
+		//alert("OUTCOME: "+cols[iOutcom]);
+		//alert("YEAR: "+cols[iYEAR]);
+		//alert("selectedYear: "+selectedYear);
+		if (cols[iCondition] != selectedCondition) continue;
+		if (cols[iOutcom]    != selectedOutcom) continue;
+		if (cols[iYEAR]      != selectedYear) continue;
+		//var NAME   = cols[iGeography];
+		var SRANum = cols[iSRANum];
+		var value  = cols[iCase];
+		if (value == "") continue;
+
+		//property = {}
+		//property["NAME"] = NAME;
+		//property[selectedCase] = value * 1;
+		
+		// Search SRANum in CA.features and store it to the geometry
+		for (var j=0; j<CA.features.length; j++){
+			if (CA.features[j].properties["SRA"] == SRANum) {
+				//geometry = CA.features[j].geometry;
+				//features[j].properties = property;
+				if (SRANum != 37) {                                // Harbison Crest-El Cajon  =>  "Data not shown"
+					features[j].properties[selectedCase] = value * 1;
+					dispValue1[CA.features[j].properties.SRA_Name] = value * 1;
+				}
+				break;
+			}
+		}		
+		//if (j >= CA.features.length) continue;    // not found in the CA.features
+
+		//features.push({"type": "Feature", "geometry": geometry, "properties": property});
+		//features.push({"type": "Feature", "properties": property});
+	}
+	
+	// save all cancer type for the correlations
+	for (var i=1; i<CANCER.length; i++) {	
+		var cols = CANCER[i];
+		//if (cols[iCondition] != selectedCondition) continue;
+		if (cols[iOutcom]    != selectedOutcom) continue;
+		if (cols[iYEAR]      != selectedYear) continue;
+		var condition   = cols[iCondition];
+		//var NAME        = cols[iGeography];
+		var SRANum      = cols[iSRANum];
+		var value       = cols[iCase];
+		if (value == "") continue;    // ????
+		
+		// Search SRANum in CA.features and store it to the geometry for same logic above
+		for (var j=0; j<CA.features.length; j++){
+			if (CA.features[j].properties["SRA"] == SRANum) {
+				if (!allValue1[condition]) {
+					allValue1[condition] = JSON.parse(JSON.stringify(copyValue1));
+				}
+				allValue1[condition][CA.features[j].properties.SRA_Name] = value * 1;
+				break;
+			}
+		}		
+	}
+	//alert(dump(allValue1['Lung Cancer']));
+	
+	geojson = {
+		"type": CA.type,
+		"bbox": CA.bbox,
+		"features": features
+	}
+	//alert(dump(geojson));
+	
+	if (features.length == 0) {
+		alert("Data not shown. Please reselect.");
+		return;
+	}
+	
+	if (classification == "equal") {
+	
+		var min = Number.MAX_VALUE;  
+		var max = Number.MIN_VALUE;
+		for (var i=0; i<geojson.features.length; i++){
+			if (geojson.features[i].properties[selectedCase] == "Data not shown") continue;
+			try {
+				value = parseFloat(geojson.features[i].properties[selectedCase]);
+			} catch(e) {
+				alert("cancer data invalid!!");
+				return;
+			}
+			if (min > value) min = value;
+			if (max < value) max = value;
+		}
+		//alert(selectedCase + " " + min + " " + max);
+		if (min == Number.MAX_VALUE && max == Number.MIN_VALUE || min == max) classCount = 1;    // by W20160822
+		
+		var range = max - min;
+		var interval = range / (classCount * 1.0);
+		var intervals = new Array();
+		intervals[0] = min * 1;
+		for (var i=1; i<classCount; i++) {
+			intervals[i] = intervals[i-1] * 1 + interval;
+		}
+		for (var i=0; i<classCount; i++) {
+			//if (range > classCount) intervals[i] = Math.floor(intervals[i]);
+			//else           intervals[i] = (Math.floor(intervals[i]*100)/100).toFixed(2);
+			intervals[i] = (Math.floor(intervals[i]*100)/100).toFixed(2);
+		}
+		//alert(intervals[0]+" "+intervals[1]+" "+intervals[2]+" "+intervals[3]+" "+intervals[4]+" "+intervals[5]+" "+intervals[6]+" "+intervals[7]);
+		ACSdata_render1(geojson, selectedCase, intervals, colorList);
+	}
+	
+	if (classification == "quantile") {
+			
+		var values = new Array();
+		var j=0;
+		for (var i=0; i<geojson.features.length; i++) {
+			if (geojson.features[i].properties[selectedCase] == "Data not shown") continue;
+			value = parseFloat(geojson.features[i].properties[selectedCase]);
+			values[j++] = value;
+		}
+		values.sort(function(a,b){return a-b});
+		if (values.length < classCount) classCount = values.length;    // by W20160822
+		
+		var interval = values.length / (classCount * 1.0);;
+		//alert("values.length: "+values.length+"    interval: "+interval);
+		
+		var intervals = new Array();
+		var next_interval = 0;
+		//intervals[0] = Math.round(values[0]);
+		intervals[0] = values[0];
+		for (var i=1; i<classCount; i++) {
+			next_interval += interval;
+			j = Math.round(next_interval);
+			//alert(i+": "+j+" "+next_interval+"  values["+j+"]="+values[j]);
+			intervals[i] = values[j];
+		}
+		for (var i=0; i<classCount; i++) {
+			if (isFloat(intervals[i])) intervals[i] = (Math.floor(intervals[i]*100)/100).toFixed(2);
+		}
+		//alert(selectedCase+"  "+intervals[0]+" "+intervals[1]+" "+intervals[2]+" "+intervals[3]+" "+intervals[4]+" "+intervals[5]+" "+intervals[6]+" "+intervals[7]);
+		ACSdata_render1(geojson, selectedCase, intervals, colorList);
+	}
+
+	
+}
+
+function yearChange2() {
+	var selectedLayer  = document.layerSelect.ACSdata.value;
+	//if (document.YearSelect2.year2.value == "2010")  setSelectField(CENSUS2010[0], 5, "ACSdata_options");
+	//if (document.YearSelect2.year2.value == "2011")  setSelectField(CENSUS2011[0], 5, "ACSdata_options");
+	//if (document.YearSelect2.year2.value == "2012")  setSelectField(CENSUS2012[0], 5, "ACSdata_options");
+	//if (document.YearSelect2.year2.value == "2013")  setSelectField(CENSUS2013[0], 5, "ACSdata_options");
+	//if (document.YearSelect2.year2.value == "Average")  setSelectField(CENSUSaverage[0], 5, "ACSdata_options");
+
+	setSelectField(CATEGORY_DESCRIPTIONS[document.YearSelect2.year2.value][document.layerSelect0.ACSdata0.value], 0, "ACSdata_options");
+	
+	var options = document.getElementById("ACSdata_options").options;
+	for (var i=0; i<options.length; i++) {
+		if (options[i].text == selectedLayer) break;
+	}
+	if (i >= options.length) {    // not found in the options
+		//alert("The data that you selected are not available. please select a different year or socioeconomic and demographic variable.");
+		//alert("The '" + selectedLayer + "' is not found in " + document.YearSelect2.year2.value + ".\n" +
+		//	  "The '" + document.layerSelect.ACSdata.value + "' of " + document.YearSelect2.year2.value + " will show up.");
+		//document.getElementById("ACSdata_options").selectedIndex = options.length - 1;
+		// Default: first option (ex. Total Population)
+		document.getElementById("ACSdata_options").selectedIndex = 0;
+		layerChange2();
+		return;
+	}
+	document.getElementById("ACSdata_options").selectedIndex = i;
+	layerChange2();
+}
+
+function layerChange2(direction) {
+
+  	var selectedLayer      = document.layerSelect.ACSdata.value;
+	var selectedNormal     = document.NormalizationSelect.normalization.value;
+	var selectedYear       = document.YearSelect2.year2.value;
+	var classification     = document.classSelect2.classified.value;
+	//var selectedColorNum   = document.colorNumSelect2.colorNum.value * 1;
+	var selectedColorNum   = document.colorNumSelect2.colorNum.value;
+	var selectedClassNum   = document.classNumSelect2.classNum.value;
+	var classCount         = selectedClassNum * 1;
+	var colorList          = COLOR_CLASS[selectedColorNum+selectedClassNum];
+	//var x = document.layerSelect.ACSdata.selectedIndex;
+    //var y = document.layerSelect.ACSdata.options;
+    //alert("Index: " + y[x].index + " is " + y[x].text);
+	//var selectedText = document.layerSelect.ACSdata.options[document.layerSelect.ACSdata.selectedIndex].text;
+	//alert(selectedText);
+	//var ACS_labels = [];
+	//for (var i=0; i<document.layerSelect.ACSdata.options.length; i++) {
+	//	ACS_labels.push(document.layerSelect.ACSdata.options[i].text);
+	//}
+	//alert(dump(ACS_labels));
+	
+	// if the Socio-economic and Demographic Factors changed in right-side, 
+	// we must reset the cancer_type and the cancer_case in left-side and re-draw the left-side
+	if (!direction || direction != "uni-direction") {
+		// Reset Socio-economic and Demographic Factors (SDF) using Left_Map_Type and Left_Map_Case.
+		var bcCANCERtype = document.ConditionSelect.cancer_type.value;       // before change cancer type value
+		var bcCANCERcase = document.CaseSelect.cancer_case.value;            // before change cancer case value
+		
+		// set the cancer_type and cancer_case options to CANCER_DESCRIPTIONS
+		CANCER_DESCRIPTIONS = getNewCANCERs(document.layerSelect0.ACSdata0.value, document.layerSelect.ACSdata.value);
+		setSelectField(Object.keys(CANCER_DESCRIPTIONS), 0, "cancer_type", bcCANCERtype);
+		var acCANCERtype = //document.layerSelect0.ACSdata0.value;           // after change SDFgroup value
+		
+		setSelectField(CANCER_DESCRIPTIONS[document.ConditionSelect.cancer_type.value], 0, "cancer_case", bcCANCERcase);
+
+		layerChange1("uni-direction");
+	}
+	
+	CENSUS = getCENSUSdata(document.YearSelect2.year2.value);    // CENSUS is a global variable
+	//alert(dump(CENSUS[2]));
+	
+	var iYEAR      = getColumnIndex(CENSUS[0], "Year")
+	var iSRAName   = getColumnIndex(CENSUS[0], "SRA Name")
+	var iSRANum    = getColumnIndex(CENSUS[0], "SRA Num")
+	var iLayer     = getColumnIndex(CENSUS[0], selectedLayer)
+	var iNormal    = getColumnIndex(CENSUS[0], selectedNormal)
+	
+	if (iNormal != -1) {
+		if (selectedLayer != "Median Total Income of a Household ($)")    // no effect, if selectedNormal == "none" only
+		{
+			if (selectedNormal == "Total Population") {
+				selectedLayer += ' (%)';
+			}
+			if (selectedNormal == "area") {
+				selectedLayer += ' /km²';
+			}
+		}
+	}
+	//alert(selectedLayer);
+	
+	// Build census data here.
+	features = []
+	allValue2 = {}    // save all ACS options for the correlations
+	dispValue2 = {}
+	dispValue2['selectedLayer'] = selectedLayer;    // save for tool tip of left map
+	for (var i=1; i<CENSUS.length; i++) {	
+		var cols = CENSUS[i];
+		//alert(dump(cols));
+		//alert("Variable: "+cols[iLayer]);
+		//alert("YEAR: "+cols[iYEAR]);
+		//alert("selectedYear: "+selectedYear);
+		if (cols[iYEAR]  != selectedYear) continue;
+		//alert("YEAR: "+cols[iYEAR]);
+		//var NAME   = cols[iSRAName];
+		var SRANum = cols[iSRANum];
+		var value  = cols[iLayer];
+		if (value == "") continue;
+
+		property = {}
+		//property["NAME"] = NAME;
+		property[selectedLayer] = "Data not shown";
+		if (value != 0) {
+			if (iNormal == -1) {
+				property[selectedLayer] = value.replace('%','') * 1;
+			}
+			else {
+				if (selectedLayer != "Median Total Income of a Household ($)") {    // no effect, if selectedNormal == "none" only
+					if (selectedNormal == "Total Population") {
+						property[selectedLayer] = value.replace('%','') * 100 / cols[iNormal];
+					}
+					if (selectedNormal == "area") {
+						property[selectedLayer] = value.replace('%','') / cols[iNormal];
+					}
+				} else property[selectedLayer] = value.replace('%','') * 1;
+			}
+		}
+
+		// Search SRANum in CA.features and store it to the geometry
+		for (var j=0; j<CA.features.length; j++){
+			if (CA.features[j].properties["SRA"] == SRANum) {
+				geometry = CA.features[j].geometry;
+				property["NAME"] = CA.features[j].properties.SRA_Name;
+				break;
+			}
+		}
+		
+		if (j >= CA.features.length) continue;    // not found in the CA.features
+
+		features.push({"type": "Feature", "geometry": geometry, "properties": property});
+		dispValue2[property["NAME"]] = property[selectedLayer];
+	}
+	
+	// save all ACS options for the correlations
+	for (var i=1; i<CENSUS.length; i++) {	
+		var cols = CENSUS[i];
+		if (cols[iYEAR]  != selectedYear) continue;
+		//var NAME   = cols[iSRAName];
+		var SRANum = cols[iSRANum];
+		
+		//for (var k=0; k<document.layerSelect.ACSdata.options.length; k++) {
+		//	var kSelectedLayer = document.layerSelect.ACSdata.options[k].text;
+		//	var kLayer    = getColumnIndex1(CENSUS[0], kSelectedLayer)
+		//	if (kLayer < 0) alert(k+' = '+kSelectedLayer);
+		//	var value     = cols[kLayer];
+		for (var k=5; k<CENSUS[0].length; k++) {
+			var kSelectedLayer = CENSUS[0][k];
+			//alert("hi "+kSelectedLayer);
+			//var kLayer    = getColumnIndex1(CENSUS[0], kSelectedLayer)
+			//if (kLayer < 0) alert(k+' = '+kSelectedLayer);
+			var value     = cols[k];
+			if (value == "") continue;
+			if (value ==  0) continue;
+			
+			/* if Case "Age_Adjusted_Rate" selected, skip it from right-side chart and csv data.
+			if (document.CaseSelect.case.value == "Age_Adjusted_Rate") {
+				var matched = false;
+				var ageLayers = CATEGORY_DESCRIPTIONS[document.YearSelect2.year2.value]["Age"];
+				for (var m=0; m<ageLayers.length; m++) {
+					if (kSelectedLayer == ageLayers[m]) {
+						matched = true;
+						break;
+					}
+				}
+				if (matched) continue; 
+			} */
+			
+			//property = {}
+			//property["NAME"] = NAME;
+			var converted_value;
+			if (iNormal == -1) {
+				converted_value = value.replace('%','') * 1;
+			}
+			else {
+				if (kSelectedLayer != "Median Total Income of a Household ($)") {    // amended at 2016-09-20
+					if (selectedNormal == "Total Population") {
+						converted_value = value.replace('%','') * 100 / cols[iNormal];
+						kSelectedLayer += ' (%)';
+					}
+					if (selectedNormal == "area") {
+						converted_value = value.replace('%','') / cols[iNormal];
+						kSelectedLayer += ' /km²';
+					}
+				} else converted_value = value.replace('%','') * 1;
+			}
+			
+			// Search SRANum in CA.features and store it to the geometry
+			for (var j=0; j<CA.features.length; j++){
+				if (CA.features[j].properties["SRA"] == SRANum) {
+					//geometry = CA.features[j].geometry;
+					if (!allValue2[kSelectedLayer]) {
+						allValue2[kSelectedLayer] = {};
+					}
+					allValue2[kSelectedLayer][CA.features[j].properties.SRA_Name] = converted_value;
+					break;
+				}
+			}		
+			if (j >= CA.features.length) continue;    // not found in the CA.features
+	
+			//features.push({"type": "Feature", "geometry": geometry, "properties": property});
+			//features.push({"type": "Feature", "properties": property});
+			//dispValue2[NAME] = value.replace('%','') * 1;
+			//dispValue2[NAME] = converted_value;
+		}
+	}
+	//alert(dump(allValue2['Total Paraguaen population']));
+	
+	geojson = {
+		"type": CA.type,
+		"bbox": CA.bbox,
+		"features": features
+	}
+	//alert(dump(geojson));
+	
+	if (features.length == 0) {
+		alert("Data not shown. Please reselect.");
+		return;
+	}
+
+	if (classification == "equal") {
+	
+		var min = Number.MAX_VALUE;  
+		var max = Number.MIN_VALUE;
+		for (var i=0; i<geojson.features.length; i++){
+			if (geojson.features[i].properties[selectedLayer] == "Data not shown") continue;
+			try {
+				value = parseFloat(geojson.features[i].properties[selectedLayer]);
+			} catch(e) {
+				alert("census data invalid!!");
+				return;
+			}
+			//if (value == -999) continue;
+			if (min > value) min = value;
+			if (max < value) max = value;
+		}
+		//alert(selectedLayer + " " + min + " " + max);
+		if (min == Number.MAX_VALUE && max == Number.MIN_VALUE) classCount = 1;    // by W20160822
+		
+		var range = max - min;
+		var interval = range / (classCount * 1.0);
+		var intervals = new Array();
+		intervals[0] = min * 1;
+		for (var i=1; i<classCount; i++) {
+			intervals[i] = intervals[i-1] * 1 + interval;
+		}
+		for (var i=0; i<classCount; i++) {
+			//if (range > classCount) intervals[i] = Math.floor(intervals[i]);
+			//else           intervals[i] = (Math.floor(intervals[i]*100)/100).toFixed(2);
+			intervals[i] = (Math.floor(intervals[i]*100)/100).toFixed(2);
+		}
+		//alert(intervals[0]+" "+intervals[1]+" "+intervals[2]+" "+intervals[3]+" "+intervals[4]+" "+intervals[5]+" "+intervals[6]+" "+intervals[7]);
+		SELECTED_LAYER2 = selectedLayer;        // Global variable;
+		ACSdata_render2(geojson, selectedLayer, intervals, colorList);
+	}
+	
+	if (classification == "quantile") {
+			
+		var values = new Array();
+		var j=0;
+		for (var i=0; i<geojson.features.length; i++) {
+			if (geojson.features[i].properties[selectedLayer] == "Data not shown") continue;
+			value = parseFloat(geojson.features[i].properties[selectedLayer]);
+			values[j++] = value;
+		}
+		values.sort(function(a,b){return a-b});
+		if (values.length < classCount) classCount = values.length;    // by W20160822
+		
+		var interval = values.length / (classCount * 1.0);
+		
+		var intervals = new Array();
+		var next_interval = 0;
+		intervals[0] = values[0];
+		for (var i=1; i<classCount; i++) {
+			next_interval += interval;
+			j = Math.round(next_interval);
+			intervals[i] = values[j];
+		}
+		for (var i=0; i<classCount; i++) {
+			if (isFloat(intervals[i])) intervals[i] = (Math.floor(intervals[i]*100)/100).toFixed(2);
+		}
+		//alert(selectedLayer+"  "+intervals[0]+" "+intervals[1]+" "+intervals[2]+" "+intervals[3]+" "+intervals[4]+" "+intervals[5]+" "+intervals[6]+" "+intervals[7]);
+		SELECTED_LAYER2 = selectedLayer;        // Global variable;
+		ACSdata_render2(geojson, selectedLayer, intervals, colorList);
+	}
+
+	
+}
+
+function polygon_highlight(feature) {
+	return {
+		weight: 5,
+		color: '#000000',
+		//color: '#00FFFF',
+		dashArray: '',
+		fillOpacity: 0
+	};
+}	
+
+function ACSdata_render1(geojson, item, intervals, colorList) {
+
+		var geoJsonPloy2 = null;        // highlight the selected area of right map  (global variable in this function)
+
+        // clear a layer and two controls
+		remove1();
+
+		geojson1 = L.geoJson(geojson, {
+			style: style1,
+			onEachFeature: onEachFeature
+		}).addTo(map1);		
+		
+		// control that shows state info on hover
+		info1 = L.control();
+
+		info1.onAdd = function (map1) {
+			this._div = L.DomUtil.create('div', 'info');
+			this.update();
+			return this._div;
+		};
+
+
+		info1.update = function (props) {
+			////if (props) alert(dump(props));
+			var dispItem = (item.length <= 40) ? item : item.substring(0,40-3) + " ...";
+			//this._div.innerHTML = (props ? document.CaseSelect.case.options[document.CaseSelect.case.selectedIndex].text + ' <br/>' + 
+			this._div.innerHTML = (props ? dispItem + ' <br/>' + 
+				'<b>' + (!Number.isFinite(props[item]) || props[item] % 1 == 0 ? props[item] : props[item].toFixed(1)) + '</b><br/>'
+				//+document.layerSelect.ACSdata.options[document.layerSelect.ACSdata.selectedIndex].text + '<br/>'
+				//+ '<br/>' + dispValue2['selectedLayer'] + ' (Right Map)<br/>'
+				//+'<b>' + (!Number.isFinite(dispValue2[props.NAME]) || dispValue2[props.NAME] % 1 == 0 ? dispValue2[props.NAME] : dispValue2[props.NAME].toFixed(1)) + '</b><br/>'
+				//+'<h5>Area</h5>'
+				+ '<br/>Area<br/>'
+				+ '<b>' + props.NAME + '</b>'
+				: 'Hover over an area');
+		};
+
+		info1.addTo(map1);
+		//info1.addTo(map2);
+
+		// get color depending on population density value
+		function getColor1(d) {
+			var color = [];
+			//if (intervals.length == 5) color = ["#FFE0E0","#EBA59B","#CF705F","#B04130","#8F0A0A"];
+			//if (intervals.length == 6) color = ["#B6EDF0","#81C0EB","#4695E3","#216BD1","#1C3AB0","#0A0A91"];
+			//if (intervals.length == 8) color = ["#FFEDA0","#FED976","#FEB24C","#FD8D3C","#FC4E2A","#E31A1C","#BD0026","#800026"];
+			color = colorList;
+			for (var i=color.length-1; i>=0; i--) {
+				//if (d >= intervals[i]) return color[i];
+				if (d == "Data not shown") return "#5E5E5E";
+				if (d >= intervals[i]) {
+					//alert(d+" color["+i+"]="+color[i]);
+					return color[i];
+				}
+			}
+			
+		}
+		
+		function style1(feature) {
+			return {
+				weight: 2,
+				opacity: 1,
+				color: 'white',
+				dashArray: '3',
+				fillOpacity: 0.8,
+				fillColor: getColor1(feature.properties[item])
+			};
+		}
+
+		function highlightFeature(e) {
+			layer1 = e.target;
+			//console.log(layer1._latlngs[0] + " / " + layer1._latlngs[1] + " / " + layer1._latlngs[2]  + " / " + layer1._latlngs[4]);
+			layer1.setStyle({
+				weight: 5,
+				//color: '#666',
+				color: '#00FFFF',
+				dashArray: '',
+				fillOpacity: 0.7
+			});
+			if (!L.Browser.ie) {
+				//layer1.bringToFront();
+			}
+
+			info1.update(layer1.feature.properties);
+			
+			// shows state info of right map if on hover of left map
+			var layer2featureProperities = {};
+			layer2featureProperities["NAME"] = layer1.feature.properties.NAME;
+			layer2featureProperities[dispValue2['selectedLayer']] = dispValue2[layer1.feature.properties.NAME];
+			info2.update(layer2featureProperities);
+
+			// highlight the region in the right map, same region on hover in the left map
+			geoJsonPloy2 = L.geoJson(layer1.feature, {
+				style: polygon_highlight,
+			});
+			map2.addLayer(geoJsonPloy2);
+		}
+
+		function resetHighlight(e) {
+			info1.update();                          // no shows state info of left  map if mouse out of left map                      
+			info2.update();                          // no shows state info of right map if mouse out of left map
+			
+			geojson1.resetStyle(e.target);                       // erase highlight of the region in the left map
+			if (geoJsonPloy2) map2.removeLayer(geoJsonPloy2);    // erase highlight of the region in the right map
+		}
+
+		function onEachFeature(feature, layer1) {
+			layer1.on({
+				mouseover: highlightFeature,
+				mouseout: resetHighlight
+			});
+		}
+
+		function zoomToFeature(e) {
+			map1.fitBounds(e.target.getBounds());
+		}
+
+
+
+		legend1 = L.control({position: 'bottomright'});
+
+		legend1.onAdd = function (map1) {
+
+			var div = L.DomUtil.create('div', 'info legend'),
+				//grades = [0, 13559    , 27118    , 40677    , 54236   , 67795   , 81354   , 94913  ],     // var
+				grades = intervals,
+				labels = [],
+				from, to;
+
+			for (var i = 0; i < grades.length; i++) {
+				from = grades[i];
+				to = grades[i + 1];
+				efrom = (from % 1 === 0) ?  number_format(from, 0, '.', ',') : number_format(from, 1, '.', ',');
+				eto = (to % 1 === 0) ?  number_format(to, 0, '.', ',') : number_format(to, 1, '.', ',');
+
+				labels.push(
+					'<i style="background:' + getColor1(from * 1) + '"></i> ' +
+					efrom + (to ? '&ndash;' + eto : '+'));
+			}
+			labels.push(    // last legend is always 'Data not shown'
+					'<i style="background:' + getColor1('Data not shown') + '"></i> ' +
+					'Data not shown');
+			div.innerHTML = labels.join('<br>');
+			return div;
+		};
+
+		legend1.addTo(map1);
+		// CHRIS CHANGE: Add data at end of render function
+		var hospital_icon = L.icon({
+		iconUrl: 'images/icons/HOSPITAL.PNG',
+		iconSize: [25, 25],
+		iconAnchor: [16, 37],
+		popupAnchor: [0, -28]
+		});
+		
+		for (var i = 0; i < data.length; i++) {
+			point = data[i];
+			L.marker([point[0], point[1]],{icon:hospital_icon}).addTo(hospital1).bindPopup(point[3]);
+		}
+		// cancer_center_1
+		var cancer_center_icon = L.icon({
+		iconUrl: 'images/icons/cancer_center.png',
+		iconSize: [25, 25],
+		iconAnchor: [16, 37],
+		popupAnchor: [0, -28]
+		});
+		
+		for (var i = 0; i < data_cancer_center.length; i++) {
+			point = data_cancer_center[i];
+			L.marker([point[0], point[1]],{icon:cancer_center_icon}).addTo(cancer_center_1).bindPopup(point[3]);
+		}
+
+		// END CHRIS CHANGE
+		
+		// HHH CHANGE: Add freeway data
+		latlngs1 = [];
+		for (var i = 0; i < data_freeway.features.length; i++) {
+			var feature = data_freeway.features[i];
+			latlngs1[i] = [];
+			for (var j = 0; j < feature.geometry.coordinates.length; j++) {
+				latlngs1[i].push(new L.LatLng(feature.geometry.coordinates[j][1], feature.geometry.coordinates[j][0]));
+			}
+		}
+		
+		var freeway1_polyline = new L.MultiPolyline(latlngs1, {
+			color: 'grey',
+			weight: 2,
+			smoothFactor: 0
+		});
+		
+		freeway1_polyline.addTo(freeway1);
+
+		//freeway1.addTo(map1);
+}
+
+function ACSdata_render2(geojson, item, intervals, colorList) {
+		
+		var geoJsonPloy1 = null;        // highlight the selected area of left map  (global variable in this function)
+		
+        // clear a layer and two controls
+		remove2();
+
+		geojson2 = L.geoJson(geojson, {
+
+			style: style1,
+			onEachFeature: onEachFeature
+		}).addTo(map2);
+
+		//polygon_highlight1.bringToFront();
+		
+		// control that shows state info on hover
+		info2 = L.control();
+
+		info2.onAdd = function (map2) {
+			this._div = L.DomUtil.create('div', 'info');
+			this.update();
+			return this._div;
+		};
+
+		info2.update = function (props) {
+			//this._div.innerHTML = (props ? document.layerSelect.ACSdata.options[document.layerSelect.ACSdata.selectedIndex].text + '<br/>' + 
+			var dispItem = (item.length <= 40) ? item : item.substring(0,40-3) + " ...";
+			this._div.innerHTML = (props ? dispItem + ' <br/>' +    // item is good choice in this case
+				'<b>' + (!Number.isFinite(props[item]) || props[item] % 1 == 0 ? props[item] : props[item].toFixed(1)) + '</b><br/>'
+				//+document.CaseSelect.case.options[document.CaseSelect.case.selectedIndex].text + ' (Left Map)<br/>'
+				//+dispValue1['selectedCase'] + '<br/>'
+				//+'<b>' + (!Number.isFinite(dispValue1[props.NAME]) || dispValue1[props.NAME] % 1 == 0 ? dispValue1[props.NAME] : dispValue1[props.NAME].toFixed(1)) + '</b><br/>'
+				//+'<h5>Area</h5>'
+				+ '<br/>Area<br/>'
+				+ '<b>' + props.NAME + '</b>'
+				: 'Hover over an area');
+		};
+
+		info2.addTo(map2);
+
+
+		// get color depending on population density value
+		function getColor1(d) {
+			var color = [];
+			//if (intervals.length == 5) color = ["#FFE0E0","#EBA59B","#CF705F","#B04130","#8F0A0A"];
+			//if (intervals.length == 6) color = ["#B6EDF0","#81C0EB","#4695E3","#216BD1","#1C3AB0","#0A0A91"];
+			//if (intervals.length == 8) color = ["#FFEDA0","#FED976","#FEB24C","#FD8D3C","#FC4E2A","#E31A1C","#BD0026","#800026"];
+			//if (intervals.length == 8) color = ["#ffffcc","#FED976","#FEB24C","#FD8D3C","#FC4E2A","#E31A1C","#BD0026","#800026"];
+			color = colorList;
+			for (var i=color.length-1; i>=0; i--) {
+				if (d == "Data not shown") return "#5E5E5E";
+				if (d >= intervals[i]) return color[i];
+			}
+			
+		}
+		
+		function style1(feature) {
+			return {
+				weight: 2,
+				opacity: 1,
+				color: 'white',
+				dashArray: '3',
+				fillOpacity: 0.7,
+				fillColor: getColor1(feature.properties[item])
+			};
+		}
+
+		
+		
+		function highlightFeature(e) {
+			layer2 = e.target;
+			//console.log(layer2._latlngs[0] + " / " + layer2._latlngs[1] + " / " + layer2._latlngs[2]  + " / " + layer2._latlngs[4]);
+			layer2.setStyle({
+				weight: 5,
+				//color: '#666',
+				color: '#00FFFF',
+				dashArray: '',
+				fillOpacity: 0.7
+			});
+			if (!L.Browser.ie) {
+				//layer2.bringToFront();
+			}
+			if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+				//layer2.bringToFront();
+			}
+			
+			info2.update(layer2.feature.properties);
+			
+			// shows state info of left map if on hover of right map
+			var layer1featureProperities = {};
+			layer1featureProperities["NAME"] = layer2.feature.properties.NAME;
+			layer1featureProperities[dispValue1['selectedCase']] = dispValue1[layer2.feature.properties.NAME];
+			info1.update(layer1featureProperities);
+			
+			// highlight the region in the left map, same region on hover in the right map
+			geoJsonPloy1 = L.geoJson(layer2.feature, {
+				style: polygon_highlight,
+			});
+			map1.addLayer(geoJsonPloy1);
+		}
+		
+		function resetHighlight(e) {
+			info2.update();                          // no shows state info of right map if mouse out of right map                      
+			info1.update();                          // no shows state info of left  map if mouse out of right map
+			geojson2.resetStyle(e.target);                       // erase highlight of the region in the right map
+			if (geoJsonPloy1) map1.removeLayer(geoJsonPloy1);    // erase highlight of the region in the left map
+		}
+		
+		function onEachFeature(feature, layer2) {
+			layer2.on({
+				mouseover: highlightFeature,
+				mouseout: resetHighlight,
+			});
+		}
+
+		function zoomToFeature(e) {
+			map2.fitBounds(e.target.getBounds());
+		}
+
+		//map2.attributionControl.addAttribution('Population data &copy; <a href="http://census.gov/">US Census Bureau</a>');
+
+
+		legend2 = L.control({position: 'bottomright'});
+
+		legend2.onAdd = function (map2) {
+
+			var div = L.DomUtil.create('div', 'info legend'),
+				//grades = [0, 13559    , 27118    , 40677    , 54236   , 67795   , 81354   , 94913  ],     // var
+				grades = intervals,
+				labels = [],
+				from, to;
+
+			for (var i = 0; i < grades.length; i++) {
+				from = grades[i];
+				to = grades[i + 1];
+				efrom = (from % 1 === 0) ?  number_format(from, 0, '.', ',') : number_format(from, 1, '.', ',');
+				eto = (to % 1 === 0) ?  number_format(to, 0, '.', ',') : number_format(to, 1, '.', ',');
+
+				labels.push(
+					'<i style="background:' + getColor1(from * 1) + '"></i> ' +
+					efrom + (to ? '&ndash;' + eto : '+'));
+			}
+			labels.push(    // last legend is always 'Data not shown'
+					'<i style="background:' + getColor1('Data not shown') + '"></i> ' +
+					'Data not shown');
+			div.innerHTML = labels.join('<br>');
+			return div;
+		};
+		legend2.addTo(map2);
+
+		// CHRIS CHANGE: Add data at end of render function
+		// hospital_icon
+		var hospital_icon = L.icon({
+		iconUrl: 'images/icons/hospital.png',
+		iconSize: [25, 25],
+		iconAnchor: [16, 37],
+		popupAnchor: [0, -28]
+		});		
+		// hospital data
+		for (var i = 0; i < data.length; i++) {
+			point = data[i];
+			L.marker([point[0], point[1]],{icon:hospital_icon}).addTo(hospital2).bindPopup(point[3]);
+		}
+		
+		// cancer_center_2
+		var cancer_center_icon = L.icon({
+		iconUrl: 'images/icons/cancer_center.png',
+		iconSize: [25, 25],
+		iconAnchor: [16, 37],
+		popupAnchor: [0, -28]
+		});
+		
+		for (var i = 0; i < data_cancer_center.length; i++) {
+			point = data_cancer_center[i];
+			L.marker([point[0], point[1]],{icon:cancer_center_icon}).addTo(cancer_center_2).bindPopup(point[3]);
+		}
+		// END CHRIS CHANGE
+		// freeway data
+		latlngs2 = [];
+		for (var i = 0; i < data_freeway.features.length; i++) {
+			var feature = data_freeway.features[i];
+			latlngs2[i] = [];
+			for (var j = 0; j < feature.geometry.coordinates.length; j++) {
+				latlngs2[i].push(new L.LatLng(feature.geometry.coordinates[j][1], feature.geometry.coordinates[j][0]));
+			}
+		}
+		var freeway2_polyline = new L.MultiPolyline(latlngs2, {
+			color: 'grey',
+			weight: 2,
+			smoothFactor: 0
+		});
+		
+		freeway2_polyline.addTo(freeway2);
+		//freeway2.addTo(map2);	
+}
+
+
+
+
+/**
+ * Google Chart Left - Pearson's R by Cancer Type
+ */
+function draw_chart_left(allValue1, dispValue2) {
+	
+	var visualArray = [['Element', 'R', { role: 'style' }]];
+	var rSquares = {};    // key: cancerType, value: R square
+	for (var cancerType in allValue1) {
+		var correlationValue = getCorrleationValue(allValue1[cancerType], dispValue2);
+		var result = correlationValue[0];
+		var count  = correlationValue[1];
+		//var color  = cancerType == document.ConditionSelect.condition.value ? '#ff3366': '#3366ff';
+		//if (count < 6) color = '#efeff5';    // Gray
+		if (cancerType == document.ConditionSelect.condition.value) {
+			color = '#FFCC33';
+		} else {
+			color = '#3366ff'
+			if (count < 6) color = '#efeff5';    // Gray
+		}
+		visualArray.push([cancerType.replace(' Cancer','')+'  '+'('+count+')', result, color]);
+		rSquares[cancerType] = result;
+		//visualArray.push([cancerType.replace(' Cancer',''), result, color]);
+	}
+	//alert(dump(visualArray[0]));
+	// sort visual array by Math.abs(R square) without heading
+	visualArray.sort(function(a, b) {
+		var aVal = a[1];
+		var bVal = b[1];
+		if (aVal == "R") aVal = 9.9;
+		if (bVal == "R") bVal = 9.9;
+		aVal = Math.abs(aVal);
+		bVal = Math.abs(bVal);
+		if (a[2] == '#efeff5') aVal = -aVal;
+		if (b[2] == '#efeff5') bVal = -bVal;
+		return bVal - aVal;
+	});
+	
+	csv_L_list = create_csv_left_list(allValue1, dispValue2, rSquares);
+ 
+	google.charts.setOnLoadCallback(drawBasic1);
+	//google.charts.setOnLoadCallback(drawChart);
+	
+	function drawBasic1() {
+		
+		var data = google.visualization.arrayToDataTable(visualArray);
+		
+		var view = new google.visualization.DataView(data);
+		/*view.setColumns([0, 1,
+						{ calc: "stringify",
+							sourceColumn: 1,
+							type: "string",
+							role: "annotation" },
+						2]);
+		*/
+/*		
+		var data = google.visualization.arrayToDataTable([
+			['male', 'Density', { role: 'style' }],
+			['female ', 0.3011, '#FF3366'],            // RGB value
+			['non-hispanic white ', -0.1614, '#FF3366'],            // English color name
+			['non-Hispanic black ', 0, '#FF3366'],
+			['Asian/Pacific Islander ', -0.3457, '#FF3366' ], // CSS-style declaration
+			['Median income; total household income ', 0.5218, '#FF3366'],            // RGB value
+			['Households with cash assistance ', -0.1657, '#FF3366'],            // English color name
+			['Households with children under age 18', 0.0000, '#FF3366'],
+			['professional, scientific, management, administrative employed civilians age 16 and older ', 0.5222, '#FF3366' ], // CSS-style declaratio
+			['population in armed forces ', 0.0000, '#FF3366'],            // RGB value
+			['population married', 0.2084, '#FF3366'],            // English color name
+			['female headed households ', -0.4246, '#FF3366'],
+			['owner occupied households ', -0.4385, '#FF3366' ], // CSS-style declaration
+			['Non-Hodgkins Lymphoma', -0.0550, '#FF3366' ], // CSS-style declaration
+			['Households ', 0.3245, '#FF3366' ], // CSS-style declaration
+			['population moved in last 5 years ', -0.1352, '#FF3366' ], // CSS-style declaration
+			['unemployed civilian population ', -0.3702, '#FF3366' ], // CSS-style declaration
+			['population with health insurance ', -0.2473, '#FF3366' ], // CSS-style declaration
+			['population with non health insurance ', -0.4258, '#FF3366' ], // CSS-style declaration
+			['population with a disability ', 0.1092, '#FF3366' ], // CSS-style declaration
+			['population with a vision disability ', 0.6720, '#FF3366' ], // CSS-style declaration
+			['population with a hearing disability ', -0.5600, '#FF3366' ], // CSS-style declaration
+			['population with a cognative disability ', 0.0000, '#FF3366' ], // CSS-style declaration
+			['independent living disability ', 0.4149, '#FF3366' ], // CSS-style declaration
+			['population with a vision disability ', 0.6720, '#FF3366' ], // CSS-style declaration
+			['population with a hearing disability ', -0.5600, '#FF3366' ], // CSS-style declaration
+			['population with a cognative disability ', 0.0000, '#FF3366' ], // CSS-style declaration
+			['independent living disability ', 0.4149, '#FF3366' ], // CSS-style declaration				
+		]);
+*/	
+		var options = {
+			//tooltip: { isHtml: true }, 
+			width: '100%',
+			height: 500,
+			//bar: {groupWidth: "95%"},
+			bars: 'horizontal',
+			backgroundColor: 'transparent',
+			//legend: {position: 'top', maxLines: 3},
+			//title: 'The Correlation between Age_Adjusted_Rate of Death due to Cancer in 2010 & Total Population with Health Insurance (%)',
+			//focusTarget:'datum',
+			
+			hAxis: {
+				textStyle : {
+					fontSize: 15 // or the number you want
+				}
+
+			},				
+			axes: {             
+				x: { 
+				0: { side: 'top'} 
+				},
+				y: {
+					0: { side: 'right'}
+				}
+				
+				
+			}, 
+		
+			vAxis: {
+				//title: 'R squared',
+				slantedText: true,
+				slantedTextAngle: 80,
+				maxTextLines: 5000,
+				showTextEvery: 1,
+				textStyle : {
+					fontSize: 11 // or the number you want
+				},
+			},				
+		
+			chartArea: {
+			//top: 50,
+			right: 0,
+			//bottom:50,
+			width: '60%',
+			height: '80%' 
+			},
+			
+		};
+	
+		var chart = new google.visualization.BarChart(
+			document.getElementById('chart_left'));
+	
+		chart.draw(view, options);
+	
+		var height = options.height;
+            var array = $("#chart_left svg g").children()[3].children;
+            for (var i = 0; i < array.length; i++) {
+
+                $("text").removeClass("currentNode");
+                array[i].children[0].setAttribute("class", "currentNode");
+				if ($(".currentNode").attr("text-anchor") != "middle") break;                
+                var y = height - parseFloat($(".currentNode").attr("y"));
+                $(".currentNode").attr("y", y);
+            }
+	
+		
+	}
+}
+	
+/**
+ * Google Chart Left - R square by Socioeconomic and Demographic Variable
+ */
+ 
+function draw_chart_right(dispValue1, allValue2) {
+
+	var selectedNormal = document.NormalizationSelect.normalization.value;
+	var iNormal        = getColumnIndex(CENSUS[0], selectedNormal)
+	var selectedLayer  = document.layerSelect.ACSdata.value
+	
+	if (iNormal != -1) {
+		if (selectedLayer != "Median Total Income of a Household ($)") {    // no effect, if selectedNormal == "none" only
+			if (selectedNormal == "Total Population") {
+				selectedLayer += ' (%)';
+			}
+			if (selectedNormal == "area") {
+				selectedLayer += ' /km²';
+			}
+		}
+	}
+
+	var rSquares = {};    // key: ACS_variable, value: R square
+	var workObject = {};
+	var ACS_count = 0;
+	for (var ACS_variable in allValue2) {
+		if (ACS_variable == "area" || ACS_variable == "area (%)" || ACS_variable == "area /km²") continue;
+		if (ACS_variable == "Total Population" || ACS_variable == "Total Population (%)" || ACS_variable == "Total Population /km²") continue;
+		var correlationValue = getCorrleationValue(dispValue1, allValue2[ACS_variable]);
+		var result = correlationValue[0];
+		var count  = correlationValue[1];
+		//if (ACS_variable == "Total Paraguaen population")
+		//alert(ACS_variable+"  count:"+count+"  selected1: "+correlationValue[2]+"  selected2: "+correlationValue[3]);
+		//var color  = cancerType == document.ConditionSelect.condition.value ? '#ff3366': '#3366ff';
+		//if (count < 6) color = '#efeff5';    // Gray
+		//visualArray.push([cancerType.replace(' Cancer','')+'  '+result+'('+count+')', result, color]);
+		workObject[ACS_variable] = [true, result, count, Math.abs(result)];
+		rSquares[ACS_variable] = result;
+		ACS_count++;
+	}
+	//alert(dump(workObject));
+	
+	csv_R_list = create_csv_right_list(allValue2, dispValue1, rSquares);
+	
+	while(ACS_count > MAX_COLUMN_OF_RIGHT_CHART) {
+		var minValue = 999.99;
+		var selected_variable = "";
+		for (var ACS_variable in workObject) {
+			if (ACS_variable == selectedLayer) continue;
+			var ACS_value = workObject[ACS_variable];
+			if (ACS_value[0] == true && ACS_value[3] < minValue) {
+				minValue = ACS_value[3];
+				selected_variable = ACS_variable;
+			}
+		}
+		//alert(minValue+" '"+selected_variable+"'")
+		if (selected_variable == "") break;
+		workObject[selected_variable][0] = false;
+		ACS_count--;
+	}
+	//alert(dump(workObject));
+
+	var visualArray = [['Element', 'R', { role: 'style' }]];
+	for (var ACS_variable in workObject) {
+		var ACS_value = workObject[ACS_variable];
+		var isSelected = ACS_value[0];
+		var result     = ACS_value[1];
+		var count      = ACS_value[2];
+		if (!isSelected) continue;
+		//var color  = ACS_variable == selectedLayer ? '#3366ff': '#ff3366';
+		//if (count < 6) color = '#efeff5';    // Gray
+		if (ACS_variable == selectedLayer) {
+			color = '#FFCC33';
+		} else {
+			color = '#ff3366'
+			if (count < 6) color = '#efeff5';    // Gray
+		}
+		visualArray.push([ACS_variable.replace('Total ','')+'  '+'('+count+')', result, color]);
+		//visualArray.push([ACS_variable.replace('Total ',''), result, color]);
+		//visualArray.push([ACS_variable.replace('Total ','')+'  '+result, result, ACS_variable == selectedLayer ? '#3366ff': '#ff3366']);
+	}
+	//alert(dump(visualArray[1]));
+	//sort visual array by Math.abs(R square) without heading
+	visualArray.sort(function(a, b) {
+		var aVal = a[1];
+		var bVal = b[1];
+		if (aVal == "R") aVal = 9.9;
+		if (bVal == "R") bVal = 9.9;
+		aVal = Math.abs(aVal);
+		bVal = Math.abs(bVal);
+		if (a[2] == '#efeff5') aVal = -aVal;
+		if (b[2] == '#efeff5') bVal = -bVal;
+		return bVal - aVal;
+	}); 
+
+	google.charts.setOnLoadCallback(drawBasic2);
+	
+	function drawBasic2() {
+		
+		//var data = new google.visualization.DataTable();
+		//data.addColumn('timeofday', 'Time of Day');
+		//data.addColumn('number', 'Motivation Level');
+		
+		var data = google.visualization.arrayToDataTable(visualArray);
+		
+		var view = new google.visualization.DataView(data);
+		/*view.setColumns([0, 1,
+						{ calc: "stringify",
+							sourceColumn: 1,
+							type: "string",
+							role: "annotation" },
+						2]);
+		*/
+/*		
+		var data = google.visualization.arrayToDataTable([
+			['male', 'Density', { role: 'style' }],
+			['female ', 0.3011, '#FF3366'],            // RGB value
+			['non-hispanic white ', -0.1614, '#FF3366'],            // English color name
+			['non-Hispanic black ', 0, '#FF3366'],
+			['Asian/Pacific Islander ', -0.3457, '#FF3366' ], // CSS-style declaration
+			['Median income; total household income ', 0.5218, '#FF3366'],            // RGB value
+			['Households with cash assistance ', -0.1657, '#FF3366'],            // English color name
+			['Households with children under age 18', 0.0000, '#FF3366'],
+			['professional, scientific, management, administrative employed civilians age 16 and older ', 0.5222, '#FF3366' ], // CSS-style declaratio
+			['population in armed forces ', 0.0000, '#FF3366'],            // RGB value
+			['population married', 0.2084, '#FF3366'],            // English color name
+			['female headed households ', -0.4246, '#FF3366'],
+			['owner occupied households ', -0.4385, '#FF3366' ], // CSS-style declaration
+			['Non-Hodgkins Lymphoma', -0.0550, '#FF3366' ], // CSS-style declaration
+			['Households ', 0.3245, '#FF3366' ], // CSS-style declaration
+			['population moved in last 5 years ', -0.1352, '#FF3366' ], // CSS-style declaration
+			['unemployed civilian population ', -0.3702, '#FF3366' ], // CSS-style declaration
+			['population with health insurance ', -0.2473, '#FF3366' ], // CSS-style declaration
+			['population with non health insurance ', -0.4258, '#FF3366' ], // CSS-style declaration
+			['population with a disability ', 0.1092, '#FF3366' ], // CSS-style declaration
+			['population with a vision disability ', 0.6720, '#FF3366' ], // CSS-style declaration
+			['population with a hearing disability ', -0.5600, '#FF3366' ], // CSS-style declaration
+			['population with a cognative disability ', 0.0000, '#FF3366' ], // CSS-style declaration
+			['independent living disability ', 0.4149, '#FF3366' ], // CSS-style declaration
+			['population with a vision disability ', 0.6720, '#FF3366' ], // CSS-style declaration
+			['population with a hearing disability ', -0.5600, '#FF3366' ], // CSS-style declaration
+			['population with a cognative disability ', 0.0000, '#FF3366' ], // CSS-style declaration
+			['independent living disability ', 0.4149, '#FF3366' ], // CSS-style declaration				
+		]);
+*/	
+		var options = {
+			//tooltip: { isHtml: true }, 
+			width: '100%',
+			height: 1000,
+			//bar: {groupWidth: "95%"},
+			bars: 'horizontal',
+			backgroundColor: 'transparent',
+			legend: { position: "none" },
+			//title: 'The Correlation between Age_Adjusted_Rate of Death due to Cancer in 2010 & Total Population with Health Insurance (%)',
+			//focusTarget:'datum',
+			
+			hAxis: {				
+				textStyle : {
+					fontSize: 15 // or the number you want
+				}
+			},				
+
+
+			vAxis: {
+				slantedText: true,
+				slantedTextAngle: 80,
+				maxTextLines: 5000,
+				showTextEvery: 1,
+				textStyle : {
+					fontSize: 11 // or the number you want
+				}
+			},
+
+		
+			chartArea: {
+			//top: 50,
+			right: 0,
+			//bottom:20,
+			width: '40%',
+			height: '90%' 
+			} 		
+		
+		};
+		var chart = new google.visualization.BarChart(
+			document.getElementById('chart_right'));
+	
+		chart.draw(view, options);
+
+		var height = options.height;
+            var array = $("#chart_right svg g").children()[3].children;
+            for (var i = 0; i < array.length; i++) {
+
+                $("text").removeClass("currentNode");
+                array[i].children[0].setAttribute("class", "currentNode");
+				if ($(".currentNode").attr("text-anchor") != "middle") break;                
+                var y = height - parseFloat($(".currentNode").attr("y"));
+                $(".currentNode").attr("y", y);
+            }		
+		
+		}	
+}	
+
+// phpjs.org 's number_format()
+function number_format(number, decimals, dec_point, thousands_sep) {
+    // http://kevin.vanzonneveld.net
+    // +   original by: Jonas Raoni Soares Silva (http://www.jsfromhell.com)
+    // +   improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+    // +     bugfix by: Michael White (http://getsprink.com)
+    // +     bugfix by: Benjamin Lupton
+    // +     bugfix by: Allan Jensen (http://www.winternet.no)
+    // +    revised by: Jonas Raoni Soares Silva (http://www.jsfromhell.com)
+    // +     bugfix by: Howard Yeend
+    // +    revised by: Luke Smith (http://lucassmith.name)
+    // +     bugfix by: Diogo Resende
+    // +     bugfix by: Rival
+    // +      input by: Kheang Hok Chin (http://www.distantia.ca/)
+    // +   improved by: davook
+    // +   improved by: Brett Zamir (http://brett-zamir.me)
+    // +      input by: Jay Klehr
+    // +   improved by: Brett Zamir (http://brett-zamir.me)
+    // +      input by: Amir Habibi (http://www.residence-mixte.com/)
+    // +     bugfix by: Brett Zamir (http://brett-zamir.me)
+    // +   improved by: Theriault
+    // +   improved by: Drew Noakes
+    // *     example 1: number_format(1234.56);
+    // *     returns 1: '1,235'
+    // *     example 2: number_format(1234.56, 2, ',', ' ');
+    // *     returns 2: '1 234,56'
+    // *     example 3: number_format(1234.5678, 2, '.', '');
+    // *     returns 3: '1234.57'
+    // *     example 4: number_format(67, 2, ',', '.');
+    // *     returns 4: '67,00'
+    // *     example 5: number_format(1000);
+    // *     returns 5: '1,000'
+    // *     example 6: number_format(67.311, 2);
+    // *     returns 6: '67.31'
+    // *     example 7: number_format(1000.55, 1);
+    // *     returns 7: '1,000.6'
+    // *     example 8: number_format(67000, 5, ',', '.');
+    // *     returns 8: '67.000,00000'
+    // *     example 9: number_format(0.9, 0);
+    // *     returns 9: '1'
+    // *    example 10: number_format('1.20', 2);
+    // *    returns 10: '1.20'
+    // *    example 11: number_format('1.20', 4);
+    // *    returns 11: '1.2000'
+    // *    example 12: number_format('1.2000', 3);
+    // *    returns 12: '1.200'
+    var n = !isFinite(+number) ? 0 : +number, 
+        prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+        sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+        dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+        toFixedFix = function (n, prec) {
+            // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+            var k = Math.pow(10, prec);
+            return Math.round(n * k) / k;
+        },
+        s = (prec ? toFixedFix(n, prec) : Math.round(n)).toString().split('.');
+    if (s[0].length > 3) {
+        s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+    }
+    if ((s[1] || '').length < prec) {
+        s[1] = s[1] || '';
+        s[1] += new Array(prec - s[1].length + 1).join('0');
+    }
+    return s.join(dec);
+}
+
+/**
+ * Function : dump()
+ * Arguments: The data - array,hash(associative array),object
+ *    The level - OPTIONAL
+ * Returns  : The textual representation of the array.
+ * This function was inspired by the print_r function of PHP.
+ * This will accept some data as the argument and return a
+ * text that will be a more readable version of the
+ * array/hash/object that is given.
+ * Docs: http://www.openjs.com/scripts/others/dump_function_php_print_r.php
+ */
+function dump(arr,level) {
+	var dumped_text = "";
+	if(!level) level = 0;
+	
+	//The padding given at the beginning of the line.
+	var level_padding = "";
+	for(var j=0;j<level+1;j++) level_padding += "    ";
+	
+	if(typeof(arr) == 'object') { //Array/Hashes/Objects 
+		for(var item in arr) {
+			var value = arr[item];
+			
+			if(typeof(value) == 'object') { //If it is an array,
+				dumped_text += level_padding + "'" + item + "' ...\n";
+				dumped_text += dump(value,level+1);
+			} else {
+				dumped_text += level_padding + "'" + item + "' => \"" + value + "\"\n";
+			}
+		}
+	} else { //Stings/Chars/Numbers etc.
+		dumped_text = "===>"+arr+"<===("+typeof(arr)+")";
+	}
+	return dumped_text;
+}
+function isInt(n) 
+{
+    return n != "" && !isNaN(n) && Math.round(n) == n;
+}
+function isFloat(n){
+    return n != "" && !isNaN(n) && Math.round(n) != n;
+}
+
+function jump(h){
+    var top = document.getElementById(h).offsetTop;
+    window.scrollTo(0, top);
+}
+
+function scroll5(element, parent){
+     $(parent)[0].scrollIntoView(true);
+     $(parent).animate({ scrollTop: $(parent).scrollTop() + $(element).offset().top - $(parent).offset().top }, { duration: 'slow', easing: 'swing'});
+} 
+
+function scroll6(element, parent){
+     $(parent)[0].scrollIntoView(false);
+     $(parent).animate({ scrollTop: $(parent).scrollTop() + $(element).offset().top - $(parent).offset().top }, { duration: 'slow', easing: 'swing'});
+}    
+function scroll7(element, parent){
+     $(parent).animate({ scrollTop: $(parent).scrollTop() + $(element).offset().top - $(parent).offset().top }, { duration: 'slow', easing: 'swing'});
+     $('html,body').animate({ scrollTop: $(parent).offset().top }, { duration: 1000, easing: 'swing'});
+}
+function scroll8(element, parent){
+     $(parent).animate({ scrollTop: $(parent).scrollTop() + $(element).offset().top - $(parent).offset().top }, { duration: 'slow', easing: 'swing'});
+     $('html,body').animate({ scrollTop: $(parent).offset().top - $(window).height() + $(element).height() }, { duration: 1000, easing: 'swing'});
+}
+function scroll9(element, parent){   
+     $(parent).animate({ scrollTop: $(parent).scrollTop() + $(element).offset().top - $(parent).offset().top }, { duration: 'slow', easing: 'swing'});
+     $('html,body').animate({ scrollTop: $(parent).offset().top - ($(window).height()/3) }, { duration: 1000, easing: 'swing'});
+}
+
+
+window.alert = function(al, $){
+    return function(msg) {
+        al.call(window,msg);
+        $(window).trigger("okbuttonclicked");
+    };
+}(window.alert, window.jQuery);
+
+
+
+$(window).on("okbuttonclicked", function() {
+    console.log("you clicked ok");
+	//jump('second');
+	scroll7("#first", "#second");
+});
+
+
+
+
+    </script>
+	
+<script type="text/javascript">
+
+    </script>	
+	
+</body>
+</html>
