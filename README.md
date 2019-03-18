@@ -21,7 +21,7 @@ Data source: [Live Well San Diego Data Access Portal](https://data.livewellsd.or
    
    step 2: upload census2013.csv as socioeconomic data
    
-   <img src="imgs/selection-panel.png" width=312 height=160 align="right"/>     
+   <img src="imgs/selection-panel.png" width=312 height=140 align="right"/>     
    
    *after uploading, two side-by-side maps will automatically show up within a few seconds
            
@@ -30,6 +30,7 @@ Data source: [Live Well San Diego Data Access Portal](https://data.livewellsd.or
    step 4: Choose a socioeconomic factor
 
 3. explore data
+   
    <img src="imgs/map.png" width=350 height=250 align="right"/>
    
    * The side-by-side interacive synchrounous maps allow you to pan, zoom in/out, switch backgrounds and overlayers (hospitals and highways)
@@ -42,11 +43,9 @@ Data source: [Live Well San Diego Data Access Portal](https://data.livewellsd.or
    
    * choose tool "correlation" and click "Add Analysis" to get correlation coefficient (Pearson's r). Pearson's r ranges from -1 to 1. The higher the absolute value of Pearson's r is, the stronger the correlation between two variables. However, correlation is not the same as causation.
    
-   <img src="imgs/analysis-tab.png" width=350 height=250 align="right"/>  
+   <img src="imgs/tabs.png" width=350 height=250 align="right"/>  
    
    * You can change data selection and add more analysis results. For example, compare Pearson's correlation value between Age-Adjusted-Rate/Hispanic_Population and Age-Adjusted-Rate/Median Household Income, which socioeconomic factor is more correlated with lung cancer age adjusted mortality rate?
-        
-   <img src="imgs/table-tab.png" width=350 height=250 align="right"/>  
    
    * switch to Cancer Data Table tab or Socioeconomic Data Table to view uploaded data
  
