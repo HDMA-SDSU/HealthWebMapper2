@@ -12,12 +12,12 @@ Data source: [Live Well San Diego Data Access Portal](https://data.livewellsd.or
 
 ## How to use (Demo)
 
-<img src="imgs/upload-panel.png" align="right"/>
-   
 1. download preprocessed datasets: Lung_Cancer_Death_2015_SRA.csv and census2013.csv
 
 2. open [HealthWebMapper2.0](https://haihonghuang.shinyapps.io/appr-upload/) and input data
-      
+
+<img src="imgs/upload-panel.png" align="right"/>
+    
     step 1: upload Lung_Cancer_Death_2015_SRA.csv as cancer data
     
     step 2: upload census2013.csv as socioeconomic data
