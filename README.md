@@ -37,17 +37,17 @@ Data source: [Live Well San Diego Data Access Portal](https://data.livewellsd.or
    
    <img src="imgs/map.png" width=312 height=160/>
 
-   <img src="imgs/tool.png" width=312 height=160 align="right"/>      
-   
    * choose tool "summary" and click "Add Analysis" to get statistical overview about all the data attributes
-
+   
+   <img src="imgs/tool.png" width=312 height=160 align="right"/>
+   
    * choose tool "correlation" and click "Add Analysis" to get correlation coefficient (Pearson's r). Pearson's r ranges from -1 to 1. The higher the absolute value of Pearson's r is, the stronger the correlation between two variables. However, correlation is not the same as causation.
 
    * You can change data selection and add more analysis results. For example, compare Pearson's correlation value between Age-Adjusted-Rate/Hispanic_Population and Age-Adjusted-Rate/Median Household Income, which socioeconomic factor is more correlated with lung cancer age adjusted mortality rate?
    <img src="imgs/analysis-tab.png" width=312 height=160/>  
    
    * switch to Cancer Data Table tab or Socioeconomic Data Table to view uploaded data
-   <img src="imgs/table-tab.png" width=312 height=160 align="right"/>  
+   <img src="imgs/table-tab.png" width=312 height=160/>  
 
 > Noted:
 >* County age-adjusted rates per 100,000 (2000 US standard population)    
