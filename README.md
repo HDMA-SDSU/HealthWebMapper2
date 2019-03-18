@@ -36,10 +36,10 @@ Data source: [Live Well San Diego Data Access Portal](https://data.livewellsd.or
    * The side-by-side interacive synchrounous maps allow you to pan, zoom in/out, switch backgrounds and overlayers (hospitals and highways)
    
    * clicking your interested areas to see details about selected data attributes
-   
-   <img src="imgs/tool.png" width=312 height=160 align="right"/>
 
    * choose tool "summary" and click "Add Analysis" to get statistical overview about all the data attributes
+   
+   <img src="imgs/tool.png" width=312 height=160 align="right"/>  
    
    * choose tool "correlation" and click "Add Analysis" to get correlation coefficient (Pearson's r). Pearson's r ranges from -1 to 1. The higher the absolute value of Pearson's r is, the stronger the correlation between two variables. However, correlation is not the same as causation.
    
