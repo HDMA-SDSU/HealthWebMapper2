@@ -11,10 +11,9 @@ HealthWebMapper2.0 URL: https://haihonghuang.shinyapps.io/appr-upload/
 Data source: [Live Well San Diego Data Access Portal](https://data.livewellsd.org/)
 
 ## How to use (Demo)
+<img src="imgs/upload-panel.png" align="right"/>
 
 1. download preprocessed datasets: Lung_Cancer_Death_2015_SRA.csv and census2013.csv
-
-<img src="imgs/upload-panel.png" align="right"/>
 
 2. open [HealthWebMapper2.0](https://haihonghuang.shinyapps.io/appr-upload/) and input data    
     
@@ -24,10 +23,10 @@ Data source: [Live Well San Diego Data Access Portal](https://data.livewellsd.or
     
    *after uploading, two side-by-side maps will automatically show up within a few seconds
 
-<img src="imgs/selection panel.png" align="right"/>         
-    
-   step 3: Choose a case or rate   
-    
+   <img src="imgs/selection-panel.png" align="right"/>         
+   
+   step 3: Choose a case or rate
+   
    step 4: Choose a socioeconomic factor
 
 3. explore data
