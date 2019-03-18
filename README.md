@@ -40,8 +40,6 @@ Data source: [Live Well San Diego Data Access Portal](https://data.livewellsd.or
    * click your interested areas to see details about selected data attributes
    
    &nbsp; 
-   
-   &nbsp;
  
    <img src="imgs/tool.png" width=350 height=160 align="right"/>  
    
