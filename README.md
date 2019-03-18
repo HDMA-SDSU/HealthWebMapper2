@@ -47,7 +47,7 @@ Data source: [Live Well San Diego Data Access Portal](https://data.livewellsd.or
    
    * choose tool "correlation" and click "Add Analysis" to get correlation coefficient (Pearson's r). Pearson's r ranges from -1 to 1. The higher the absolute value of Pearson's r is, the stronger the correlation between two variables. However, correlation is not the same as causation.
    
-   <img src="imgs/analysis-tab.png" width=350 height=250 align="right"/>  
+   <img src="imgs/table-tab.png" width=350 height=250 align="right"/>  
    
    * You can change data selection and add more analysis results. For example, compare Pearson's correlation value between Age-Adjusted-Rate/Hispanic_Population and Age-Adjusted-Rate/Median Household Income, which socioeconomic factor is more correlated with lung cancer age adjusted mortality rate?
    
