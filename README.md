@@ -13,7 +13,7 @@ Data source: [Live Well San Diego Data Access Portal](https://data.livewellsd.or
 ## How to use (Demo)
 <img src="imgs/upload-panel.png" width=312 height=160 align="right"/>
 
-1. download preprocessed datasets: Lung_Cancer_Death_2015_SRA.csv and census2013.csv
+1. download preprocessed datasets: [Lung_Cancer_Death_2015_SRA.csv]() and [census2013.csv]()
 
 2. open [HealthWebMapper2.0](https://haihonghuang.shinyapps.io/appr-upload/) and input data    
     
@@ -33,15 +33,17 @@ Data source: [Live Well San Diego Data Access Portal](https://data.livewellsd.or
    
    <img src="imgs/map.png" width=350 height=230 align="right"/>
    
-   * The side-by-side interacive synchrounous maps allow you to pan, zoom in/out, switch backgrounds and overlayers (hospitals and highways)
+   * the side-by-side interacive maps allow you to pan, zoom in/out synchrounously
    
-   * clicking your interested areas to see details about selected data attributes
+   * switch basemaps and turn on/off overlayers (labels, hospitals and highways)
+   
+   * click your interested areas to see details about selected data attributes
    
    &nbsp; 
    
    &nbsp;
  
-   <img src="imgs/tool.png" width=312 height=160 align="right"/>  
+   <img src="imgs/tool.png" width=350 height=160 align="right"/>  
    
    * choose tool "summary" and click "Add Analysis" to get statistical overview about all the data attributes
    
@@ -53,6 +55,7 @@ Data source: [Live Well San Diego Data Access Portal](https://data.livewellsd.or
    
    * switch to Cancer Data Table tab or Socioeconomic Data Table to view uploaded data
  
+&nbsp;
 
 > Noted:
 >* County age-adjusted rates per 100,000 (2000 US standard population)    
