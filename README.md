@@ -1,6 +1,6 @@
-## HealthWebMapper2.0
-
 <img src="imgs/HealthWebMapper2.png" width=364 height=288 align="right"/>
+
+## HealthWebMapper2.0
 
 [HealthWebMapper 2.0](https://haihonghuang.shinyapps.io/appr-upload/) is a web mapping application designed for visualizing cancer disparities in San Diego Sub-Regional Areas(SRAs). 
 
@@ -11,19 +11,19 @@ HealthWebMapper2.0 URL: https://haihonghuang.shinyapps.io/appr-upload/
 Data source: [Live Well San Diego Data Access Portal](https://data.livewellsd.org/)
 
 ## How to use (Demo)
+
+<img src="imgs/upload-panel.png" align="right"/>
+
+<img src="imgs/selection panel.png" align="right"/>    
 1. download preprocessed datasets: Lung_Cancer_Death_2015_SRA.csv and census2013.csv
 
 2. open [HealthWebMapper2.0](https://haihonghuang.shinyapps.io/appr-upload/) and input data
-    
-    <img src="imgs/upload-panel.png" align="right"/>
-    
+      
     step 1: upload Lung_Cancer_Death_2015_SRA.csv as cancer data
     
     step 2: upload census2013.csv as socioeconomic data
 
     *after uploading, two side-by-side maps will automatically show up within a few seconds
-    
-    <img src="imgs/selection-panel.png" align="right"/>    
     
     step 3: Choose a case or rate
     
