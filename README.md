@@ -8,7 +8,7 @@ It was developed and hosted by: [R Shiny](https://shiny.rstudio.com/) and [shiny
 
 HealthWebMapper2.0 URL: https://haihonghuang.shinyapps.io/appr-upload/
 
-Demo Datasets: 
+Demo Datasets URL: https://github.com/HDMA-SDSU/HealthWebMapper2/tree/master/demo-datasets
 
 Data source: [Live Well San Diego Data Access Portal](https://data.livewellsd.org/)
 
@@ -26,7 +26,8 @@ Data source: [Live Well San Diego Data Access Portal](https://data.livewellsd.or
    
    <img src="imgs/selection-panel.png" width=312 height=140 align="right"/>     
    
-   *after uploading, two side-by-side maps will automatically show up within a few seconds, ignore the error message if it fades
+   *after uploading two csv files, ignore the error in map panel. If upload correctly, the error message will fade and two side-by-side maps will automatically show up within a few seconds
+   *The default maps will look the same showing attribute SRAID, please proceed to step 3 and 4 to select other attributes
            
    step 3: Choose a case or rate
    
