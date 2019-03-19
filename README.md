@@ -8,12 +8,15 @@ It was developed and hosted by: [R Shiny](https://shiny.rstudio.com/) and [shiny
 
 HealthWebMapper2.0 URL: https://haihonghuang.shinyapps.io/appr-upload/
 
+Demo Datasets: 
+
 Data source: [Live Well San Diego Data Access Portal](https://data.livewellsd.org/)
+
 
 ## How to use (Demo)
 <img src="imgs/upload-panel.png" width=312 height=160 align="right"/>
 
-1. download preprocessed datasets: click the links [Lung_Cancer_Death_2015_SRA.csv](https://github.com/HDMA-SDSU/HealthWebMapper2/blob/master/demo-datasets/cancer_data/Lung_Cancer_Death_2015_SRA.csv) and [census2013.csv](); view the data in "raw"; Ctrl+S save the files in your loacal computers. 
+1. download preprocessed datasets: click the links [Lung_Cancer_Death_2015_SRA.csv](https://github.com/HDMA-SDSU/HealthWebMapper2/blob/master/demo-datasets/cancer_data/Lung_Cancer_Death_2015_SRA.csv) and [census2013.csv](https://github.com/HDMA-SDSU/HealthWebMapper2/blob/master/demo-datasets/socioeconomic%26demographic_data/census2013.csv); view the data in "Raw"; Ctrl+S save the files in your loacal computers. 
 
 2. open [HealthWebMapper2.0](https://haihonghuang.shinyapps.io/appr-upload/) and input data    
     
