@@ -23,7 +23,7 @@ Data source: [Live Well San Diego Data Access Portal](https://data.livewellsd.or
    
    <img src="imgs/selection-panel.png" width=312 height=140 align="right"/>     
    
-   *after uploading, two side-by-side maps will automatically show up within a few seconds
+   *after uploading, two side-by-side maps will automatically show up within a few seconds, ignore the error message if it fades
            
    step 3: Choose a case or rate
    
