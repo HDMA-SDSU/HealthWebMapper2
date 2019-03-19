@@ -16,7 +16,7 @@ Data source: [Live Well San Diego Data Access Portal](https://data.livewellsd.or
 ## How to use (Demo)
 <img src="imgs/upload-panel.png" width=312 height=160 align="right"/>
 
-1. download preprocessed datasets: click the links [Lung_Cancer_Death_2015_SRA.csv](https://github.com/HDMA-SDSU/HealthWebMapper2/blob/master/demo-datasets/cancer_data/Lung_Cancer_Death_2015_SRA.csv) and [census2013.csv](https://github.com/HDMA-SDSU/HealthWebMapper2/blob/master/demo-datasets/socioeconomic%26demographic_data/census2013.csv); view the data in "Raw"; Ctrl+S save the files in your loacal computers. 
+1. download preprocessed datasets: click the links [Lung_Cancer_Death_2015_SRA.csv](https://github.com/HDMA-SDSU/HealthWebMapper2/blob/master/demo-datasets/cancer_data/Lung_Cancer_Death_2015_SRA.csv) and [census2013.csv](https://github.com/HDMA-SDSU/HealthWebMapper2/blob/master/demo-datasets/socioeconomic%26demographic_data/census2013.csv); Click "Raw" button and Ctrl+S save the csv files into your loacal computers. 
 
 2. open [HealthWebMapper2.0](https://haihonghuang.shinyapps.io/appr-upload/) and input data    
     
@@ -27,6 +27,7 @@ Data source: [Live Well San Diego Data Access Portal](https://data.livewellsd.or
    <img src="imgs/selection-panel.png" width=312 height=140 align="right"/>     
    
    *after uploading two csv files, ignore the error in map panel. If upload correctly, the error message will fade and two side-by-side maps will automatically show up within a few seconds
+   
    *The default maps will look the same showing attribute SRAID, please proceed to step 3 and 4 to select other attributes
            
    step 3: Choose a case or rate
