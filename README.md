@@ -67,4 +67,4 @@ Data source: [Live Well San Diego Data Access Portal](https://data.livewellsd.or
 
 ## Use your own data
 
-See techincal document [TechDoc_DataPreprocess_HealthWebMapper2.pdf]()
+See techincal document [TechDoc_DataPreprocess_HealthWebMapper2.pdf](https://github.com/HDMA-SDSU/HealthWebMapper2/blob/master/technical%20docs/TechDoc_DataPreprocess_HealthWebMapper2.pdf)
