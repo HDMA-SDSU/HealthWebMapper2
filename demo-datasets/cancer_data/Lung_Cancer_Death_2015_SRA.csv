@@ -1,0 +1,40 @@
+CONDITION,OUTCOME,Year,Geography,GeoType,GeoName,SRAID,Region,Social Economic Status,District,Total_Case,Total_Rate,Age_Adjusted_Rate,Age45_64_Rate,Age65Plus_Rate,Total_Male_Rate,Age_Adjusted_Total_Male_Rate
+Lung Cancer,Death,2015,Central San Diego,SRA,CENTRAL SAN DIEGO,1,CENTRAL,Low Income,Supervisorial District 4,41,21.9,25.4,15.84,173.78,22.16,30.92
+Lung Cancer,Death,2015,Mid-City,SRA,MID-CITY,6,CENTRAL,Lowest Income,Supervisorial District 4,38,22.81,29.75,30.42,180.82,24.92,36.99
+Lung Cancer,Death,2015,Southeastern San Diego,SRA,SOUTHEASTERN SAN DIEGO,5,CENTRAL,Low Income,Supervisorial District 4,40,26.2,28.71,23.42,178.17,29.11,35.96
+Lung Cancer,Death,2015,Alpine,SRA,ALPINE,38,EAST,Moderately High Income,Supervisorial District 2,7,45.2,38.4,,171.76,,
+Lung Cancer,Death,2015,El Cajon,SRA,EL CAJON,34,EAST,Lowest Income,Supervisorial District 2,62,48.02,41.93,30.19,281.43,57.14,55.59
+Lung Cancer,Death,2015,Jamul,SRA,JAMUL,30,EAST,Highest Income,Supervisorial District 2,6,31.75,28.63,,214.94,,
+Lung Cancer,Death,2015,La Mesa,SRA,LA MESA,33,EAST,Low Income,Supervisorial District 2,18,29.9,23.03,,156.11,28,27.07
+Lung Cancer,Death,2015,Laguna-Pine Valley,SRA,LAGUNA-PINE VALLEY,61,EAST,Moderately Low Income,Supervisorial District 2,,,,,,,
+Lung Cancer,Death,2015,Lakeside,SRA,LAKESIDE,36,EAST,Moderately Low Income,Supervisorial District 2,30,51.34,46.72,38.69,296.7,55.34,58.95
+Lung Cancer,Death,2015,Lemon Grove,SRA,LEMON GROVE,32,EAST,Low Income,Supervisorial District 2,11,36.64,33.05,,177.56,44.27,43.64
+Lung Cancer,Death,2015,Mountain Empire,SRA,MOUNTAIN EMPIRE,62,EAST,Low Income,Supervisorial District 2,,,,,,,
+Lung Cancer,Death,2015,Santee,SRA,SANTEE,35,EAST,Moderately High Income,Supervisorial District 2,12,21.39,20.1,,154.68,27.55,29.79
+Lung Cancer,Death,2015,Spring Valley,SRA,SPRING VALLEY,31,EAST,Moderately Low Income,Supervisorial District 2,27,31.92,30.63,26.41,172.97,26.75,29.25
+Lung Cancer,Death,2015,Coastal,SRA,COASTAL,11,NORTH CENTRAL,High Income,Supervisorial District 4,28,33.92,29.91,30.16,196.34,36.27,37.88
+Lung Cancer,Death,2015,Del Mar-Mira Mesa,SRA,DEL MAR-MIRA MESA,13,NORTH CENTRAL,Highest Income,Supervisorial District 3,39,23.23,28.55,10.04,186.34,25.63,33.3
+Lung Cancer,Death,2015,Elliott-Navajo,SRA,ELLIOTT-NAVAJO,17,NORTH CENTRAL,Moderately High Income,Supervisorial District 3,37,39.54,31.15,,224.54,42.95,39.81
+Lung Cancer,Death,2015,Kearny Mesa,SRA,KEARNY MESA,10,NORTH CENTRAL,Moderately Low Income,Supervisorial District 4,65,39.26,35.76,31.34,242.32,39.69,42.1
+Lung Cancer,Death,2015,Miramar,SRA,MIRAMAR,16,NORTH CENTRAL,Low Income,Supervisorial District 3,,,,,,,
+Lung Cancer,Death,2015,Peninsula,SRA,PENINSULA,2,NORTH CENTRAL,Moderately Low Income,Supervisorial District 4,22,32.6,33.36,,239.88,23.94,29.2
+Lung Cancer,Death,2015,University,SRA,UNIVERSITY,12,NORTH CENTRAL,Moderately Low Income,Supervisorial District 3,17,24.36,24.85,,180.5,24.93,28.01
+Lung Cancer,Death,2015,Carlsbad,SRA,CARLSBAD,41,NORTH COASTAL,High Income,Supervisorial District 5,38,30.58,24.85,14.05,177.19,21.97,19.84
+Lung Cancer,Death,2015,Oceanside,SRA,OCEANSIDE,42,NORTH COASTAL,Low Income,Supervisorial District 5,66,39.88,36.25,37.06,226.16,38.9,40.17
+Lung Cancer,Death,2015,San Dieguito,SRA,SAN DIEGUITO,40,NORTH COASTAL,Highest Income,Supervisorial District 3,31,31.95,25.88,22.01,145.84,30.1,26.53
+Lung Cancer,Death,2015,Vista,SRA,VISTA,52,NORTH COASTAL,Low Income,Supervisorial District 5,27,25.7,26.33,,188.32,26.26,31.13
+Lung Cancer,Death,2015,Anza-Borrego Springs,SRA,ANZA-BORREGO SPRINGS,63,NORTH INLAND,Lowest Income,Supervisorial District 5,,,,,,,
+Lung Cancer,Death,2015,Escondido,SRA,ESCONDIDO,50,NORTH INLAND,Low Income,Supervisorial District 3,54,31.58,30.54,26.77,194.94,34.04,37.83
+Lung Cancer,Death,2015,Fallbrook,SRA,FALLBROOK,55,NORTH INLAND,Low Income,Supervisorial District 5,18,37.5,25.99,,168.34,45.43,33.77
+Lung Cancer,Death,2015,North San Diego,SRA,NORTH SAN DIEGO,14,NORTH INLAND,Highest Income,Supervisorial District 3,37,31.34,29.39,23.41,174.49,35.14,35.75
+Lung Cancer,Death,2015,Palomar-Julian,SRA,PALOMAR-JULIAN,60,NORTH INLAND,Lowest Income,Supervisorial District 5,,,,,,,
+Lung Cancer,Death,2015,Pauma,SRA,PAUMA,54,NORTH INLAND,Moderately High Income,Supervisorial District 5,,,,,,,
+Lung Cancer,Death,2015,Poway,SRA,POWAY,15,NORTH INLAND,Highest Income,Supervisorial District 2,21,23.8,21.78,,134.75,22.54,23.85
+Lung Cancer,Death,2015,Ramona,SRA,RAMONA,39,NORTH INLAND,Moderately High Income,Supervisorial District 2,12,32.46,28.42,,156.94,32.63,33.38
+Lung Cancer,Death,2015,San Marcos,SRA,SAN MARCOS,51,NORTH INLAND,Low Income,Supervisorial District 5,37,38.22,35.77,27.63,250.58,28.78,31.96
+Lung Cancer,Death,2015,Valley Center,SRA,VALLEY CENTER,53,NORTH INLAND,Moderately High Income,Supervisorial District 5,13,56.24,41.09,,240.85,40.14,31.81
+Lung Cancer,Death,2015,Chula Vista,SRA,CHULA VISTA,21,SOUTH,Lowest Income,Supervisorial District 1,31,25.61,25.03,24.95,154.74,23.8,27.01
+Lung Cancer,Death,2015,Coronado,SRA,CORONADO,3,SOUTH,Highest Income,Supervisorial District 1,6,25.18,19.75,,,,
+Lung Cancer,Death,2015,National City,SRA,NATIONAL CITY,4,SOUTH,Lowest Income,Supervisorial District 1,17,28.97,31.15,,211.51,31,39.52
+Lung Cancer,Death,2015,South Bay,SRA,SOUTH BAY,22,SOUTH,Low Income,Supervisorial District 1,36,26.51,31,15.47,218.97,29.23,38.57
+Lung Cancer,Death,2015,Sweetwater,SRA,SWEETWATER,20,SOUTH,High Income,Supervisorial District 1,27,17.97,22.68,,150.81,17.65,26.07
