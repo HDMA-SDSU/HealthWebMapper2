@@ -30,9 +30,9 @@ Data source: [Live Well San Diego Data Access Portal](https://data.livewellsd.or
    
    *The default maps will look the same showing attribute SRAID, please proceed to step 3 and 4 to select other attributes
            
-   Step 3: Choose a case or rate
+   Step 3: Choose a case or rate for the left map e.g. age-adjusted rate 
    
-   Step 4: Choose a socioeconomic factor
+   Step 4: Choose a socioeconomic factor for the right map e.g. median total income of a household
 
 3. Explore data
    
