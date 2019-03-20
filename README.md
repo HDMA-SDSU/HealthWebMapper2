@@ -68,3 +68,8 @@ Data source: [Live Well San Diego Data Access Portal](https://data.livewellsd.or
 ## Use your own data
 
 See techincal document [TechDoc_DataPreprocess_HealthWebMapper2.pdf](https://github.com/HDMA-SDSU/HealthWebMapper2/blob/master/technical%20docs/TechDoc_DataPreprocess_HealthWebMapper2.pdf)
+
+## Follow-up Survey
+
+To help us improve HealthWebMapper, we invite you to take a short survey about user experience
+URL: https://arcg.is/18jquO
