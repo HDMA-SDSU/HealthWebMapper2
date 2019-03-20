@@ -73,4 +73,4 @@ See techincal document [TechDoc_DataPreprocess_HealthWebMapper2.pdf](https://git
 
 To help us improve HealthWebMapper, we invite you to take a short [online survey](https://arcg.is/18jquO) tell us your experience about HealthWebMapper2.0
 
-URL: https://arcg.is/18jquO
+URL: https://goo.gl/forms/rHWWIthkOgZjwkbO2
