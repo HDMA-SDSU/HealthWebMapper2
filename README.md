@@ -50,9 +50,28 @@ Data source: [Live Well San Diego Data Access Portal](https://data.livewellsd.or
    
    * Choose tool "summary" and click "Add Analysis" to get statistical overview about all the data attributes
    
+   &nbsp;
+   &nbsp;
+   &nbsp;
+   &nbsp; 
+   &nbsp;
+   &nbsp;
+   &nbsp; 
+   
+   <img src="imgs/correlation.png" width=350 height=250 align="right"/>    
+   
    * Choose tool "correlation" and click "Add Analysis" to get the correlation coefficient (Pearson's r) and a scatter plot between selected cancer case/rate and socioeconomic factor. Pearson's r ranges from -1 to 1. The higher the absolute value of Pearson's r is, the stronger the correlation between two variables. However, correlation is not the same as causation.
    
-    * Choose tool "autocorrelation(cancer)" and click "Add Analysis" to get Moran's I coefficient of your selected cancer case/race and two plots. Moran's I ranges from -1 to 1. -1 is perfect clustering of dissimilar values (perfect dispersion). 0 is perfect randomness. 1 indicates perfect clustering of similar values. The left plot shows correlation between selected cancer attribute and the average(mean) attribute values of neighboring areas. The slope of the regression line is Moran's I coefficent value. The right plot is a Monte Carlo test in which the attribute values are randomly assigned to polygons in the dataset, and for each permutation of the attribute values, a Moran's I value is computed. The ouput is a sampling distribution of Moran's I values under the null hypothesis that attribute values are randomly distributed across the study area. If our observed Moran’s I value is far away from the Moran's I value of the peak of density distribution, it suggests that our observed Moran’s I value is not consistent with a Moran’s I value one would expect to get if the values were not spatially autocorrelated.
+   &nbsp; 
+   &nbsp; 
+   &nbsp; 
+   &nbsp;
+   &nbsp;
+   &nbsp; 
+   
+   <img src="imgs/autocorrelation.png" width=350 height=250 align="right"/>    
+    
+   * Choose tool "autocorrelation(cancer)" and click "Add Analysis" to get Moran's I coefficient of your selected cancer case/race and two plots. Moran's I ranges from -1 to 1. -1 is perfect clustering of dissimilar values (perfect dispersion). 0 is perfect randomness. 1 indicates perfect clustering of similar values. The left plot shows correlation between selected cancer attribute and the average(mean) attribute values of neighboring areas. The slope of the regression line is Moran's I coefficent value. The right plot is a Monte Carlo test in which the attribute values are randomly assigned to polygons in the dataset, and for each permutation of the attribute values, a Moran's I value is computed. The ouput is a sampling distribution of Moran's I values under the null hypothesis that attribute values are randomly distributed across the study area. If our observed Moran’s I value is far away from the Moran's I value of the peak of density distribution, it suggests that our observed Moran’s I value is not consistent with a Moran’s I value one would expect to get if the values were not spatially autocorrelated.
    
    <img src="imgs/table-tab.png" width=350 height=250 align="right"/>  
    
