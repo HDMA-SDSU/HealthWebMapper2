@@ -57,6 +57,9 @@ Data source: [Live Well San Diego Data Access Portal](https://data.livewellsd.or
    &nbsp;
    &nbsp;
    &nbsp; 
+   &nbsp;
+   &nbsp;
+   &nbsp; 
    
    <img src="imgs/correlation.png" width=350 height=250 align="right"/>    
    
