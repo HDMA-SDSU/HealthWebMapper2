@@ -46,19 +46,12 @@ Data source: [Live Well San Diego Data Access Portal](https://data.livewellsd.or
    
    &nbsp; 
  
-   <img src="imgs/tool.png" width=350 height=160 align="right"/>  
+   <img src="imgs/tool.png" width=340 height=200 align="right"/>  
    
-   * Choose tool "summary" and click "Add Analysis" to get statistical overview about all the data attributes
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   <img src="imgs/correlation.png" width=350 height=200 align="right"/>    
+   * Choose tool "summary" and click "Add Analysis" to get statistical overview about all the data attributes 
 
    * Choose tool "correlation" and click "Add Analysis" to get the correlation coefficient (Pearson's r) and a scatter plot between selected cancer case/rate and socioeconomic factor. Pearson's r ranges from -1 to 1. The higher the absolute value of Pearson's r is, the stronger the correlation between two variables. However, correlation is not the same as causation.
    
-   &nbsp; 
-   &nbsp; 
-   &nbsp; 
-   &nbsp;
-   &nbsp;
    &nbsp; 
    
    <img src="imgs/autocorrelation.png" width=350 height=250 align="right"/>    
