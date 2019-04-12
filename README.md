@@ -16,7 +16,7 @@ Data source: [Live Well San Diego Data Access Portal](https://data.livewellsd.or
 ## How to use (Demo)
 <img src="imgs/upload-panel.png" width=312 height=160 align="right"/>
 
-1. Open [HealthWebMapper2.0](https://haihonghuang.shinyapps.io/HealthWebMapper2/), in upper right corner, click icon [Demo Data](http://humandynamics.sdsu.edu/demo-data.html) and download preprocessed datasets, for example, download Lung_Cancer_Death_2015_SRA.csv and census2013.csv
+1. Open [HealthWebMapper2.0](https://haihonghuang.shinyapps.io/HealthWebMapper2/), in upper right corner, click icon [Demo Data](https://humandynamics.sdsu.edu/demo-data.html) and download preprocessed datasets, for example, download Lung_Cancer_Death_2015_SRA.csv and census2013.csv
 
 2. input data    
     
