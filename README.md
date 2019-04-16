@@ -20,9 +20,9 @@ Data source: [Live Well San Diego Data Access Portal](https://data.livewellsd.or
 
 2. input data    
     
-   Step 1: upload Lung_Cancer_Death_2015_SRA.csv as cancer data   
+   Step 1: upload your choice of cancer data e.g. Lung_Cancer_Death_2015_SRA.csv  
    
-   Step 2: upload census2013.csv as socioeconomic data
+   Step 2: upload your choice of socioeconomic data e.g. census2013.csv
    
    <img src="imgs/selection-panel.png" width=312 height=140 align="right"/>     
    
